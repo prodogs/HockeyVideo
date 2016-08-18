@@ -1,0 +1,5 @@
+/// <reference path="../typescript-defs/all-definitions.d.ts"/>
+class Icons extends BaseClass {
+}
+this.Icons = Icons;
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiSWNvbnMuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJJY29ucy50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSwrREFBK0Q7QUFJL0Qsb0JBQW9CLFNBQVM7QUFDN0IsQ0FBQztBQUNELElBQUksQ0FBQyxLQUFLLEdBQUcsS0FBSyxDQUFDIiwic291cmNlc0NvbnRlbnQiOlsiLy8vIDxyZWZlcmVuY2UgcGF0aD1cIi4uL3R5cGVzY3JpcHQtZGVmcy9hbGwtZGVmaW5pdGlvbnMuZC50c1wiLz5cblxuXG5cbmNsYXNzIEljb25zIGV4dGVuZHMgQmFzZUNsYXNzIHtcbn1cbnRoaXMuSWNvbnMgPSBJY29uczsiXX0=
