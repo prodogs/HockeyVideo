@@ -39,3 +39,4 @@ aldeed:simple-schema
 aldeed:collection2
 percolate:synced-cron
 reactive-var@1.0.10            # Reactive variable for tracker
+brentjanderson:buzz

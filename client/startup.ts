@@ -7,6 +7,7 @@
 console.log("client/startup.ts loading ...")
 declare var Reveal:any;
 declare var MyApp:any;
+MyApp = new C4Object();
 
 Meteor.startup(function () {
 
@@ -28,8 +29,6 @@ Meteor.startup(function () {
 		                             }
 	                             });
 */
-	this.MyApp = new C4Object();
-
 	setTimeout(function(){
 		MyApp.ObjectRouter = new ObjectUpdateRouter();
 		console.log("Running Object Observation Initalization");
