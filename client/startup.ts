@@ -1,7 +1,5 @@
 /// <reference path="../../Video/typescript-defs/all-definitions.d.ts"/>
-
 /// <reference path="C4Events.ts"/>
-
 /// <reference path="LogWindow.ts"/>
 
 console.log("client/startup.ts loading ...")
@@ -14,7 +12,6 @@ Meteor.startup(function () {
 
 	console.log("Client Lib Startup Running");
 	console.log("Initializing Factory");
-
 
 	Factory.Initialize();
 
@@ -29,24 +26,14 @@ Meteor.startup(function () {
 		                             }
 	                             });
 */
+/*
 	setTimeout(function(){
 		MyApp.ObjectRouter = new ObjectUpdateRouter();
 		console.log("Running Object Observation Initalization");
 		MyApp.ObjectRouter.startObservations();
 		console.log("Complete Object Observation Initialization")
 	}, 15000);
-
-
-/*
-	<video id="example_video_1" class="video-js vjs-default-skin"
-	controls preload="auto" width="640" height="264"
-	data-setup='{"example_option":true}'>
-	<source src="http://localhost:8888/1.mp4" type='video/mp4' />
-	<p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
-	</video>
-	*/
-
-
+*/
 	webix.ready(function () {
 		console.log("webix ready event"); // never run
 		webix.CustomScroll.init();

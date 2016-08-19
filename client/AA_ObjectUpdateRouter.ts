@@ -1,6 +1,6 @@
 /// <reference path="../../Video/typescript-defs/all-definitions.d.ts"/>
 
-console.log("Loading ObjectUpdateRouter.ts ...");
+console.log("Loading AA_ObjectUpdateRouter.ts ...");
 class ObjectUpdateStats {
 	type:string;
 	counter:number = 0;

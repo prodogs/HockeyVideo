@@ -14,14 +14,16 @@ class UIVideoPlayer {
         this.videoJS =
             videojs(
                 this.playerID ,
-                {"controls": true , "autoplay": true,"preload":"auto"},
+                {"controls": true , "autoplay": false,"preload":"auto"},
                 function(){           // Player (this) is initialized and ready.        }
                 })
     }
 
     public play() {
+        this.videoJS.play();
 
     }
     public pause() {}
 
 }
+this.UIVideoPlayer = UIVideoPlayer;
