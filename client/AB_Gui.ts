@@ -367,6 +367,11 @@ class UI extends C4Object {
 		$$(componentID).exportToExcel();
 	}
 	public static Alert(string) {webix.alert(string);}
+
+	constructor() {
+	    super();
+    }
+
 }this.UI = UI;
 
 class UIComponent extends UI {

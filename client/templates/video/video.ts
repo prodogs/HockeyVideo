@@ -10,9 +10,8 @@ Template["videoPane"].onRendered(function () {
 
     UI.Info("Play Video");
 
-    var a = new UIComplexComponent();
 
-    var controls = new UIVideoControls();
+    var controls = new UIVideoControls(player);
 
     var thePortal = new Portal();
 

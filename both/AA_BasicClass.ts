@@ -1,8 +1,4 @@
-
-/// <reference path="AA_MetaData.ts"/>
-
 /// <reference path="../typescript-defs/all-definitions.d.ts"/>
-//region Global Variable Declaration
 
 declare var RelationshipStore:Mongo.Collection<any>
 declare var MetaDataStore:Mongo.Collection<any>

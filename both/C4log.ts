@@ -24,7 +24,7 @@ class AppLog {
         return err["stack"];
     }
     public static printThis(theObject) {
-        //console.log(JSON.stringify(theObject, null, 7));
+        console.log(JSON.stringify(theObject, null, 7));
     }
     public static defaultExceptionHandler(msg:string, url:string, line:number, col:number, error?:Error) : void {
 

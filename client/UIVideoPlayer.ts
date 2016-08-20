@@ -9,8 +9,6 @@ class UIVideoPlayer {
     constructor ( playerID : string){
         this.playerID = playerID;
 
-        UI.Info("Inside Video Constructor");
-
         this.videoJS =
             videojs(
                 this.playerID ,
@@ -23,7 +21,13 @@ class UIVideoPlayer {
         this.videoJS.play();
 
     }
-    public pause() {}
+
+    public pause() {
+        this.videoJS.pause();
+    }
+    public stop() {
+        this.videoJS.stop();
+    }
 
 }
 this.UIVideoPlayer = UIVideoPlayer;

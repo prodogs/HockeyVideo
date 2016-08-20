@@ -9,9 +9,10 @@ less@2.7.5
 iron:router
 zimme:iron-router-active
 fortawesome:fontawesome
+twbs:bootstrap@3.3.6
+
 tap:i18n
 jquery
-twbs:bootstrap@3.3.5
 momentjs:moment
 russ:weather-icons
 mizzao:jquery-ui
