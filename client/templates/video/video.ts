@@ -6,10 +6,36 @@ declare var videojs : any;
 
 Template["videoPane"].onRendered(function () {
 
-    var player = new UIVideoPlayer("example_video_1");
+    var canvas = new fabric.Canvas('fabricCanvas');
+    var videoEl = document.getElementById('videoDiv');
+   // var video = new fabric.Image(videoEl);
 
-    UI.Info("Play Video");
+    //canvas.add(video);
 
+   // video.getElement().play();
+
+   // var request;
+   // var render = function() {
+  //      canvas.renderAll();
+  //      request = fabric.util.requestAnimFrame(render);
+   //     var current_time = videoEl.currentTime;
+  //      if(current_time >= 5) {
+            //videoEl.pause();
+            //cancelRequestAnimFrame(request);
+   //     }
+  //      console.log(current_time);
+  //  }
+
+   videoEl.play();
+    var rect = new fabric.Rect();
+
+    canvas.add(rect); // add object
+    //fabric.util.requestAnimFrame(render);
+
+return;
+    var player = new UIVideoPlayer("videoDiv");
+
+    player.play();
 
     var controls = new UIVideoControls(player);
 

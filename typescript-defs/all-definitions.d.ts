@@ -30,6 +30,7 @@
 /// <reference path="d3.d.ts" />
 /// <reference path="node.d.ts" />
 /// <reference path="webix.d.ts"/>
+/// <reference path="fabricjs.d.ts"/>
 
 /// <reference path="core.d.ts"/>
 /// <reference path="uicore.d.ts"/>

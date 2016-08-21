@@ -85,6 +85,7 @@
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/meteorspark_util/0.2.0/web.browser/packages/meteorspark_util.js" />
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/underscorestring_underscore.string/3.3.4/web.browser/meteor-post.js" />
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/underscorestring_underscore.string/3.3.4/web.browser/meteor-pre.js" />
+        <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/ryanswapp_fabricjs/0.2.0/web.browser/client/fabric.min.js" />
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/underscorestring_underscore.string/3.3.4/web.browser/dist/underscore.string.js" />
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/russ_weather-icons/1.0.0/web.browser/packages/russ_weather-icons.js" />
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/russ_weather-icons/1.0.0/web.browser/packages/russ_weather-icons/css/weather-icons.min.css" />
@@ -292,6 +293,7 @@
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/meteorspark_util/0.2.0/web.browser/packages/meteorspark_util.js" />
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/underscorestring_underscore.string/3.3.4/web.browser/meteor-post.js" />
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/underscorestring_underscore.string/3.3.4/web.browser/meteor-pre.js" />
+      <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/ryanswapp_fabricjs/0.2.0/web.browser/client/fabric.min.js" />
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/underscorestring_underscore.string/3.3.4/web.browser/dist/underscore.string.js" />
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/russ_weather-icons/1.0.0/web.browser/packages/russ_weather-icons.js" />
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/russ_weather-icons/1.0.0/web.browser/packages/russ_weather-icons/css/weather-icons.min.css" />
