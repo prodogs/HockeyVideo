@@ -6,6 +6,16 @@ declare var videojs : any;
 
 Template["videoPane"].onRendered(function () {
 
+    var fabricPlayer = new FabricPlayer("fabricCanvas");
+    var videoPlayer = new UIVideoPlayer("videoDiv");
+
+
+    fabricPlayer.setVideo(videoPlayer);
+    fabricPlayer.play();
+});
+
+
+/*
     var canvas = new fabric.Canvas('fabricCanvas');
     var videoEl = document.getElementById('videoDiv');
    // var video = new fabric.Image(videoEl);
@@ -31,8 +41,6 @@ Template["videoPane"].onRendered(function () {
 
     canvas.add(rect); // add object
     //fabric.util.requestAnimFrame(render);
-
-return;
     var player = new UIVideoPlayer("videoDiv");
 
     player.play();
@@ -50,6 +58,7 @@ return;
     return;
 
 })
+*/
 
 Template["videoPane"].onDestroyed(function () {
 	if (this.ui) this.ui.destructor();

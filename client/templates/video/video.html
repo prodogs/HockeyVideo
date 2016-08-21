@@ -1,11 +1,13 @@
 <template name="videoPane">
 
-    <video width="320" height="240" id="videoDiv"            muted>
-        <source src="http://localhost:8888/1.mp4" type='video/mp4' />
-        <source src="http://www.quirksmode.org/html5/videos/big_buck_bunny.ogv">
+
+    <video width="640" height="360" id="videoDiv" style="display: none" muted>
+        <source src="http://localhost:3000/1.mp4" type='video/mp4' />
+
     </video>
 
-    <canvas id="fabricCanvas" width="320" height="240"   ></canvas>
+    <canvas id="fabricCanvas" width="640" height="360" style="border:1px solid #ccc"></canvas>
+
 
     <div id="videoControls-container"></div>
 

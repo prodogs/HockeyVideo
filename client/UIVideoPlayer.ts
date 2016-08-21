@@ -3,21 +3,24 @@
 
 class UIVideoPlayer {
 
-    public playerID : string;
     public videoJS : any = null;
     public videoID : string;
     public videoElement : any;
-    public videoFabric : any;
-    public theFabric : any;
 
-    constructor(videoID : string) {
-
+    constructor ( videoID : string){
 
         this.videoID = videoID;
         this.videoElement = document.getElementById(videoID);
-        //this.videoFabric = new fabric.Image(this.videoElement);
 
+      /*  this.videoElement =
+            videojs(
+                this.videoID ,
+                {},
+             {"controls": true , "autoplay": false,"preload":"auto"},
+                function(){           // Player (this) is initialized and ready.        }
+                }) */
     }
+
     public play() {
         this.videoElement.play();
 
@@ -27,23 +30,14 @@ class UIVideoPlayer {
         this.videoElement.pause();
     }
     public stop() {
-        this.videoFabric.getElement().stop();
+        this.videoElement.getElement().stop();
+    }
+
+    public currentTime() : any {
+        var current_time = this.videoElement.currentTime;
+        return current_time;
+
     }
 
 }
 this.UIVideoPlayer = UIVideoPlayer;
-
-
-/*
- constructor ( playerID : string){
- this.playerID = playerID;
-
- this.videoJS =
- videojs(
- this.playerID ,
- {"controls": true , "autoplay": false,"preload":"auto"},
- function(){           // Player (this) is initialized and ready.        }
- })
- }
-
- */

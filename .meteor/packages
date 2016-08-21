@@ -12,7 +12,7 @@ fortawesome:fontawesome
 twbs:bootstrap@3.3.6
 
 tap:i18n
-jquery
+jquery@1.9.1
 momentjs:moment
 russ:weather-icons
 mizzao:jquery-ui
@@ -35,7 +35,6 @@ ecmascript@0.5.8
 chrismbeckett:toastr
 raix:eventemitter
 meteortypescript:typescript-libs
-yong:meteor-videojs
 aldeed:simple-schema
 aldeed:collection2
 percolate:synced-cron
