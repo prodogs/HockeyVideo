@@ -9,6 +9,8 @@ class UIPlayer {
     public pause() {}
 
 }
+this.UIPlayer = UIPlayer;
+
 class UIVideoPlayer extends UIPlayer {
 
     public videoJS : any = null;

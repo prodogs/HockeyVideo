@@ -3,11 +3,10 @@
 
 class UIPlayerControls extends UIComplexComponent {
 
-    public playButton : UIButton;
-    public stopButton : UIButton;
-    public pauseButton : UIButton;
-    public thePlayer : UIVideoPlayer;
-
+    public playButton   : UIButton;
+    public stopButton   : UIButton;
+    public pauseButton  : UIButton;
+    public thePlayer    : UIPlayer;
 
     constructor(player : UIPlayer) {
         super(null);
@@ -64,4 +63,4 @@ class UIPlayerControls extends UIComplexComponent {
     }
 
 }
-this.UIVideoControls = UIVideoControls;
+this.UIPlayerControls = UIPlayerControls;

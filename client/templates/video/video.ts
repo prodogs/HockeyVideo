@@ -6,7 +6,6 @@ declare var videojs : any;
 
 Template["videoPane"].onRendered(function () {
 
-
     var fabricPlayer = new FabricPlayer();
     fabricPlayer.setCanvas("fabricCanvas");
     var videoPlayer = new UIVideoPlayer("videoDiv");
@@ -16,15 +15,13 @@ Template["videoPane"].onRendered(function () {
 
     thePortal.initializeOneView();
 
-    var controls = new UIVideoControls(player);
+    var controls = new UIPlayerControls(fabricPlayer);
 
     thePortal.getPortlet("main").setComponent(controls);
     thePortal.setContainer("videoControls-container");
     thePortal.show();
 
     fabricPlayer.play();
-
-
 
     return;
 
