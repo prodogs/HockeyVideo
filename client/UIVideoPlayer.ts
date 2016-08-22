@@ -1,13 +1,23 @@
 /// <reference path="../../Video/typescript-defs/all-definitions.d.ts"/>
 
 
-class UIVideoPlayer {
+class UIPlayer {
+
+    constructor() {}
+    public play() {}
+    public stop() {}
+    public pause() {}
+
+}
+class UIVideoPlayer extends UIPlayer {
 
     public videoJS : any = null;
     public videoID : string;
     public videoElement : any;
 
     constructor ( videoID : string){
+
+        super();
 
         this.videoID = videoID;
         this.videoElement = document.getElementById(videoID);

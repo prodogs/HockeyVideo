@@ -1,18 +1,18 @@
 /// <reference path="../typescript-defs/all-definitions.d.ts"/>
 
 
-class UIVideoControls extends UIComplexComponent {
+class UIPlayerControls extends UIComplexComponent {
 
     public playButton : UIButton;
     public stopButton : UIButton;
     public pauseButton : UIButton;
-    public videoPlayer : UIVideoPlayer;
+    public thePlayer : UIVideoPlayer;
 
 
-    constructor(player : UIVideoPlayer) {
+    constructor(player : UIPlayer) {
         super(null);
-        this.setID("UIVideoController");
-        this.videoPlayer = player;
+        this.setID("UIPlayerController");
+        this.thePlayer = player;
     }
 
     public initialize() {
@@ -41,17 +41,17 @@ class UIVideoControls extends UIComplexComponent {
         switch (event) {
             case "playVideo" : {
                 UI.Info("Play Video Button");
-                this.videoPlayer.play();
+                this.thePlayer.play();
             }
             break;
             case "stopButton" : {
                 UI.Info("Stop Button");
-                this.videoPlayer.stop();
+                this.thePlayer.stop();
             }
             break;
             case "pauseButton": {
                 UI.Info("Pause Button");
-                this.videoPlayer.pause();
+                this.thePlayer.pause();
             }
         }
     }

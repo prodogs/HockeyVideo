@@ -1,7 +1,7 @@
 /// <reference path="../typescript-defs/all-definitions.d.ts"/>
 
 
-class FabricPlayer extends UIComponent {
+class FabricPlayer extends UIPlayer {
 
     public static canvas : any;
     public videoElement : any;
@@ -9,22 +9,24 @@ class FabricPlayer extends UIComponent {
     public videoObject : any;
     public request : any;7
 
-    constructor(element : string = null) {
+    constructor( ) {
         super();
-
-        if (element = null) return;
-
-        this.setCanvas(element);
     }
 
     public setCanvas(element : string) {
+
         FabricPlayer.canvas = new fabric.Canvas(element);
     }
 
     public setVideo(videoPlayer : UIVideoPlayer) {
 
         FabricPlayer.videoPlayer = videoPlayer;
-        this.videoObject = new fabric.Image(FabricPlayer.videoPlayer.videoElement);
+
+        var videoEL = document.getElementById("videoDiv");
+
+      //  this.videoObject = new fabric.Image(FabricPlayer.videoPlayer.videoElement);
+        this.videoObject = new fabric.Image(videoEL);
+
         this.videoElement = FabricPlayer.videoPlayer.videoElement;
         FabricPlayer.canvas.add(this.videoObject);
     }
