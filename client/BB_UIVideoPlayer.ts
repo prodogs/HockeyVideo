@@ -7,6 +7,8 @@ class UIPlayer {
     public play() {}
     public stop() {}
     public pause() {}
+    public getTime() : number {return 0;}
+    public setTime(time : number) {}
 
 }
 this.UIPlayer = UIPlayer;
@@ -35,7 +37,6 @@ class UIVideoPlayer extends UIPlayer {
 
     public play() {
         this.videoElement.play();
-
     }
 
     public pause() {
@@ -45,10 +46,16 @@ class UIVideoPlayer extends UIPlayer {
         this.videoElement.getElement().stop();
     }
 
-    public currentTime() : any {
+    public currentTime() : number {
         var current_time = this.videoElement.currentTime;
         return current_time;
+    }
 
+    public getTime() : number {
+        return this.currentTime();
+    }
+    public setTime(time : number) {
+        this.videoElement.currentTime(time);
     }
 
 }

@@ -1387,8 +1387,6 @@ class UIDataTable extends UIComponent {
 		this._width = value;
 	}
 
-
-
 	constructor(properties = null) {
 		super(properties);
 		this.setID("UIDataTable_");
@@ -1406,7 +1404,6 @@ class UIDataTable extends UIComponent {
 
 		if ($$(this.dataTableID)) $$(this.dataTableID).showColumn(columnID);
 	}
-
 
 
 	public newItem() {

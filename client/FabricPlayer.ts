@@ -40,6 +40,9 @@ class FabricPlayer extends UIPlayer {
             FabricPlayer.videoPlayer.pause();
             FabricPlayer.cancelRequestAnimFrame(request);
         }
+
+        AnnotationBlock.theBlock.play(current_time);
+
         //console.log(current_time);
     }
 
@@ -49,11 +52,35 @@ class FabricPlayer extends UIPlayer {
         fabric.util.requestAnimFrame(FabricPlayer.render);
     }
 
+
+
+    public pause() {
+
+        this.videoObject.getElement().pause();
+        FabricPlayer.videoPlayer.pause();
+
+        FabricPlayer.cancelRequestAnimFrame(this.request);
+
+    }
     public drawCircle() {
 
         FabricPlayer.canvas.item(0).hasBorders = false;
         FabricPlayer.canvas.setActiveObject(FabricPlayer.canvas.item(0));
     }
+
+    public currentTime() : number {
+        var current_time = this.videoElement.currentTime;
+        return current_time;
+    }
+
+    public getTime() : number {
+        return this.currentTime();
+    }
+    public setTime(time : number) {
+        if (time < 0) time = 0;
+        this.videoObject.getElement().currentTime = time;
+    }
+
 
     public static cancelRequestAnimFrame(request : any) {
         return window.cancelAnimationFrame ||

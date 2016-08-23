@@ -10,6 +10,15 @@ Template["videoPane"].onRendered(function () {
     fabricPlayer.setCanvas("fabricCanvas");
     var videoPlayer = new UIVideoPlayer("videoDiv");
     fabricPlayer.setVideo(videoPlayer);
+    
+    var annotationBlock = new AnnotationBlock();
+
+    var circle = new CircleAnnotation();
+    circle.createObject();
+    circle.start = 1;
+    circle.end = 15;
+
+    annotationBlock.add(circle);
 
     var thePortal = new Portal();
 
@@ -23,7 +32,11 @@ Template["videoPane"].onRendered(function () {
 
     fabricPlayer.play();
 
-    return;
+    var annotatonTable = new UIDataTable();
+
+    annotatonTable.setColumns(["start","end","label"])
+    annotatonTable.setList(annotationBlock.annotationList);
+
 
 })
 
