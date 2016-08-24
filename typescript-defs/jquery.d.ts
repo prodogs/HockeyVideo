@@ -1109,9 +1109,9 @@ interface JQueryStatic {
     parseXML(data: string): XMLDocument;
 
     /**
-     * remove the whitespace from the beginning and end of a string.
+     * remove the whitespace from the beginning and endTime of a string.
      * 
-     * @param str remove the whitespace from the beginning and end of a string.
+     * @param str remove the whitespace from the beginning and endTime of a string.
      */
     trim(str: string): string;
 
@@ -2595,23 +2595,23 @@ interface JQuery {
     after(func: (index: number, html: string) => string|Element|JQuery): JQuery;
 
     /**
-     * Insert content, specified by the parameter, to the end of each element in the set of matched elements.
+     * Insert content, specified by the parameter, to the endTime of each element in the set of matched elements.
      * 
-     * param content1 DOM element, array of elements, HTML string, or jQuery object to insert at the end of each element in the set of matched elements.
-     * param content2 One or more additional DOM elements, arrays of elements, HTML strings, or jQuery objects to insert at the end of each element in the set of matched elements.
+     * param content1 DOM element, array of elements, HTML string, or jQuery object to insert at the endTime of each element in the set of matched elements.
+     * param content2 One or more additional DOM elements, arrays of elements, HTML strings, or jQuery objects to insert at the endTime of each element in the set of matched elements.
      */
     append(content1: JQuery|any[]|Element|Text|string, ...content2: any[]): JQuery;
     /**
-     * Insert content, specified by the parameter, to the end of each element in the set of matched elements.
+     * Insert content, specified by the parameter, to the endTime of each element in the set of matched elements.
      * 
-     * param func A function that returns an HTML string, DOM element(s), or jQuery object to insert at the end of each element in the set of matched elements. Receives the index position of the element in the set and the old HTML value of the element as arguments. Within the function, this refers to the current element in the set.
+     * param func A function that returns an HTML string, DOM element(s), or jQuery object to insert at the endTime of each element in the set of matched elements. Receives the index position of the element in the set and the old HTML value of the element as arguments. Within the function, this refers to the current element in the set.
      */
     append(func: (index: number, html: string) => string|Element|JQuery): JQuery;
 
     /**
-     * Insert every element in the set of matched elements to the end of the target.
+     * Insert every element in the set of matched elements to the endTime of the target.
      * 
-     * @param target A selector, element, HTML string, array of elements, or jQuery object; the matched set of elements will be inserted at the end of the element(s) specified by this parameter.
+     * @param target A selector, element, HTML string, array of elements, or jQuery object; the matched set of elements will be inserted at the endTime of the element(s) specified by this parameter.
      */
     appendTo(target: JQuery|any[]|Element|string): JQuery;
 
@@ -3145,8 +3145,8 @@ interface JQuery {
     /**
      * Reduce the set of matched elements to a subset specified by a range of indices.
      * 
-     * @param start An integer indicating the 0-based position at which the elements begin to be selected. If negative, it indicates an offset from the end of the set.
-     * @param end An integer indicating the 0-based position at which the elements stop being selected. If negative, it indicates an offset from the end of the set. If omitted, the range continues until the end of the set.
+     * @param start An integer indicating the 0-based position at which the elements begin to be selected. If negative, it indicates an offset from the endTime of the set.
+     * @param end An integer indicating the 0-based position at which the elements stop being selected. If negative, it indicates an offset from the endTime of the set. If omitted, the range continues until the endTime of the set.
      */
     slice(start: number, end?: number): JQuery;
 

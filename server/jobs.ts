@@ -22,12 +22,12 @@ Meteor.startup(function () {
         },
         job: function () {
           //  var checkConistency = new ConsistencyChecker();
-          //  checkConistency.start();
+          //  checkConistency.startTime();
 
         }
     });
 
-    SyncedCron.start();
+    SyncedCron.startTime();
 
 });
 

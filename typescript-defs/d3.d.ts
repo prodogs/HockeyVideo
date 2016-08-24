@@ -238,14 +238,14 @@ declare module d3 {
             insert(name: string, before: (datum: Datum, index: number, outerIndex: number) => EventTarget): Update<Datum>;
 
             /**
-             * Inserts a new child to the end of each node in the selection by computing a new node. This child will inherit its parent's data (if available). Returns a fresh selection consisting of the newly-inserted children.
+             * Inserts a new child to the endTime of each node in the selection by computing a new node. This child will inherit its parent's data (if available). Returns a fresh selection consisting of the newly-inserted children.
              * @param name the function to compute a new child
              * @param before the selector to determine position (e.g., ":first-child")
              */
             insert(name: (datum: Datum, index: number, outerIndex: number) => EventTarget, before: string): Update<Datum>;
 
             /**
-             * Inserts a new child to the end of each node in the selection by computing a new node. This child will inherit its parent's data (if available). Returns a fresh selection consisting of the newly-inserted children.
+             * Inserts a new child to the endTime of each node in the selection by computing a new node. This child will inherit its parent's data (if available). Returns a fresh selection consisting of the newly-inserted children.
              * @param name the function to compute a new child
              * @param before a function to determine the node to use as the next sibling
              */
@@ -317,13 +317,13 @@ declare module d3 {
 
             /**
              * Returns the listener (if any) for the given event.
-             * @param type the type of event to load the listener for. May have a namespace (e.g., ".foo") at the end.
+             * @param type the type of event to load the listener for. May have a namespace (e.g., ".foo") at the endTime.
              */
             on(type: string): (datum: Datum, index: number, outerIndex: number) => any;
 
             /**
              * Adds a listener for the specified event. If one was already registered, it is removed before the new listener is added. The return value of the listener function is ignored.
-             * @param type the of event to listen to. May have a namespace (e.g., ".foo") at the end.
+             * @param type the of event to listen to. May have a namespace (e.g., ".foo") at the endTime.
              * @param listener an event listener function, or null to unregister
              * @param capture sets the DOM useCapture flag
              */
@@ -628,14 +628,14 @@ declare module d3 {
         insert(name: string, before: (datum: Datum, index: number, outerIndex: number) => EventTarget): Selection<Datum>;
 
         /**
-         * Inserts a new child to the end of each node in the selection by computing a new node. This child will inherit its parent's data (if available). Returns a fresh selection consisting of the newly-inserted children.
+         * Inserts a new child to the endTime of each node in the selection by computing a new node. This child will inherit its parent's data (if available). Returns a fresh selection consisting of the newly-inserted children.
          * @param name the function to compute a new child
          * @param before the selector to determine position (e.g., ":first-child")
          */
         insert(name: (datum: Datum, index: number, outerIndex: number) => EventTarget, before: string): Selection<Datum>;
 
         /**
-         * Inserts a new child to the end of each node in the selection by computing a new node. This child will inherit its parent's data (if available). Returns a fresh selection consisting of the newly-inserted children.
+         * Inserts a new child to the endTime of each node in the selection by computing a new node. This child will inherit its parent's data (if available). Returns a fresh selection consisting of the newly-inserted children.
          * @param name the function to compute a new child
          * @param before a function to determine the node to use as the next sibling
          */
@@ -707,13 +707,13 @@ declare module d3 {
 
         /**
          * Returns the listener (if any) for the given event.
-         * @param type the type of event to load the listener for. May have a namespace (e.g., ".foo") at the end.
+         * @param type the type of event to load the listener for. May have a namespace (e.g., ".foo") at the endTime.
          */
         on(type: string): (datum: Datum, index: number, outerIndex: number) => any;
 
         /**
          * Adds a listener for the specified event. If one was already registered, it is removed before the new listener is added. The return value of the listener function is ignored.
-         * @param type the of event to listen to. May have a namespace (e.g., ".foo") at the end.
+         * @param type the of event to listen to. May have a namespace (e.g., ".foo") at the endTime.
          * @param listener an event listener function, or null to unregister
          * @param capture sets the DOM useCapture flag
          */
@@ -1301,7 +1301,7 @@ declare module d3 {
     export function range(stop: number): number[];
 
     /**
-     * Generates a numeric sequence starting from the given start and stop values. 'step' defaults to 1. The output range does not include 'stop'.
+     * Generates a numeric sequence starting from the given startTime and stop values. 'step' defaults to 1. The output range does not include 'stop'.
      */
     export function range(start: number, stop: number, step?: number): number[];
 

@@ -2688,7 +2688,7 @@ declare namespace fabric {
          * Draws borders of an object's bounding box.
          * Requires public properties: width, height
          * Requires public options: padding, borderColor
-         * @param {CanvasRenderingContext2D} ctx Context to draw on
+         * @param {CanvasRenderingContext2D} ctx Context to activiate on
          */
         drawBorders(context:CanvasRenderingContext2D):IObject;
 
@@ -2696,7 +2696,7 @@ declare namespace fabric {
          * Draws corners of an object's bounding box.
          * Requires public properties: width, height
          * Requires public options: cornerSize, padding
-         * @param {CanvasRenderingContext2D} ctx Context to draw on
+         * @param {CanvasRenderingContext2D} ctx Context to activiate on
          */
         drawCorners(context:CanvasRenderingContext2D):IObject;
 
@@ -3373,17 +3373,17 @@ declare namespace fabric {
 
         setText(value:string):IText;
         /**
-         * Sets selection start (left boundary of a selection)
-         * @param {Number} index Index to set selection start to
+         * Sets selection startTime (left boundary of a selection)
+         * @param {Number} index Index to set selection startTime to
          */
         setSelectionStart(index:number):void;
         /**
-         * Sets selection end (right boundary of a selection)
-         * @param {Number} index Index to set selection end to
+         * Sets selection endTime (right boundary of a selection)
+         * @param {Number} index Index to set selection endTime to
          */
         setSelectionEnd(index:number):void;
         /**
-         * Gets style of a current selection/cursor (at the start position)
+         * Gets style of a current selection/cursor (at the startTime position)
          * @param {Number} [startIndex] Start index to get styles at
          * @param {Number} [endIndex] End index to get styles at
          * @return {Object} styles Style object at a specified (or current) index
@@ -3403,7 +3403,7 @@ declare namespace fabric {
         renderCursorOrSelection():void;
 
         /**
-         * Returns 2d representation (lineIndex and charIndex) of cursor (or selection start)
+         * Returns 2d representation (lineIndex and charIndex) of cursor (or selection startTime)
          * @param {Number} [selectionStart] Optional index. When not given, current selectionStart is used.
          */
         get2DCursorLocation(selectionStart?:number):void;
@@ -3483,27 +3483,27 @@ declare namespace fabric {
         getSelectedText():string;
 
         /**
-         * Find new selection index representing start of current word according to current selection index
+         * Find new selection index representing startTime of current word according to current selection index
          * @param {Number} startFrom Surrent selection index
          * @return {Number} New selection index
          */
         findWordBoundaryLeft(startFrom:number):number;
 
         /**
-         * Find new selection index representing end of current word according to current selection index
+         * Find new selection index representing endTime of current word according to current selection index
          * @param {Number} startFrom Current selection index
          * @return {Number} New selection index
          */
         findWordBoundaryRight(startFrom:number):number;
 
         /**
-         * Find new selection index representing start of current line according to current selection index
+         * Find new selection index representing startTime of current line according to current selection index
          * @param {Number} startFrom Current selection index
          */
         findLineBoundaryLeft(startFrom:number):number;
 
         /**
-         * Find new selection index representing end of current line according to current selection index
+         * Find new selection index representing endTime of current line according to current selection index
          * @param {Number} startFrom Current selection index
          */
         findLineBoundaryRight(startFrom:number):number;
@@ -3514,7 +3514,7 @@ declare namespace fabric {
         getNumNewLinesInSelectedText():number;
 
         /**
-         * Finds index corresponding to beginning or end of a word
+         * Finds index corresponding to beginning or endTime of a word
          * @param {Number} selectionStart Index of a character
          * @param {Number} direction: 1 or -1
          */
@@ -3556,7 +3556,7 @@ declare namespace fabric {
          * Inserts new style object
          * @param {Number} lineIndex Index of a line
          * @param {Number} charIndex Index of a char
-         * @param {Boolean} isEndOfLine True if it's end of line
+         * @param {Boolean} isEndOfLine True if it's endTime of line
          */
         insertNewlineStyleObject(lineIndex:number, charIndex:number, isEndOfLine:boolean):void;
 
@@ -3571,7 +3571,7 @@ declare namespace fabric {
         /**
          * Inserts style object(s)
          * @param {String} _chars Characters at the location where style is inserted
-         * @param {Boolean} isEndOfLine True if it's end of line
+         * @param {Boolean} isEndOfLine True if it's endTime of line
          * @param {Boolean} [useCopiedStyle] Style to insert
          */
         insertStyleObjects(_chars:string, isEndOfLine:boolean, useCopiedStyle?:boolean):void;
@@ -4159,7 +4159,7 @@ declare namespace fabric {
         animate(options?:IUtilAnimationOptions):void;
         /**
          * requestAnimationFrame polyfill based on http://paulirish.com/2011/requestanimationframe-for-smart-animating/
-         * In order to get a precise start time, `requestAnimFrame` should be called as an entry into the method
+         * In order to get a precise startTime time, `requestAnimFrame` should be called as an entry into the method
          * @param {Function} callback Callback to invoke
          */
         requestAnimFrame(callback:Function):void;
@@ -4213,14 +4213,14 @@ declare namespace fabric {
         drawArc(ctx:CanvasRenderingContext2D, fx:number, fy:number, coords:number[]):void;
         /**
          * Calculate bounding box of a elliptic-arc
-         * @param {Number} fx start point of arc
+         * @param {Number} fx startTime point of arc
          * @param {Number} fy
          * @param {Number} rx horizontal radius
          * @param {Number} ry vertical radius
          * @param {Number} rot angle of horizontal axe
          * @param {Number} large 1 or 0, whatever the arc is the big or the small on the 2 points
          * @param {Number} sweep 1 or 0, 1 clockwise or counterclockwise direction
-         * @param {Number} tx end point of arc
+         * @param {Number} tx endTime point of arc
          * @param {Number} ty
          */
         getBoundsOfArc(fx:number, fy:number, rx:number, ry:number, rot:number, large:number, sweep:number, tx:number, ty:number):IPoint[];
@@ -4232,7 +4232,7 @@ declare namespace fabric {
          * @param {Number} y1
          * @param {Number} x2 secondo control point
          * @param {Number} y2
-         * @param {Number} x3 end of beizer
+         * @param {Number} x3 endTime of beizer
          * @param {Number} y3
          */
         getBoundsOfCurve(x0:number, y0:number, x1:number, y1:number, x2:number, y2:number, x3:number, y3:number):IPoint[];
@@ -4548,12 +4548,12 @@ declare namespace fabric {
 
         /**
          * Draws a dashed line between two points
-         * This method is used to draw dashed line around selection area.
+         * This method is used to activiate dashed line around selection area.
          * @param {CanvasRenderingContext2D} ctx context
-         * @param {Number} x  start x coordinate
-         * @param {Number} y start y coordinate
-         * @param {Number} x2 end x coordinate
-         * @param {Number} y2 end y coordinate
+         * @param {Number} x  startTime x coordinate
+         * @param {Number} y startTime y coordinate
+         * @param {Number} x2 endTime x coordinate
+         * @param {Number} y2 endTime y coordinate
          * @param {Array} da dash array pattern
          */
         drawDashedLine(ctx:CanvasRenderingContext2D, x:number, y:number, x2:number, y2:number, da:any[]):void;

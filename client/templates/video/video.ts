@@ -11,33 +11,33 @@ Template["videoPane"].onRendered(function () {
     var videoPlayer = new VideoPlayer("videoDiv");
     fabricPlayer.setVideo(videoPlayer);
 
-    var annotationBlock = new AnnotationBlock();
+    var annotationBlock = new VEventManager();
 
     var circle = new CircleAnnotation();
     circle.createObject();
-    circle.start = 1;
-    circle.end = 15;
+    circle.startTime = 1;
+    circle.endTime = 15;
 
     annotationBlock.add(circle);
 
 
     var circle = new CircleAnnotation();
     circle.createObject();
-    circle.start = 15;
-    circle.end = 30;
+    circle.startTime = 15;
+    circle.endTime = 30;
     annotationBlock.add(circle);
 
 
     var rect = new RectAnnotation();
     rect.createObject();
-    rect.start = 3;
-    rect.end = 30;
+    rect.startTime = 3;
+    rect.endTime = 30;
     annotationBlock.add(rect);
 
     var text = new TextAnnotation();
     text.createObject();
-    text.start = 5;
-    text.end = 30;
+    text.startTime = 5;
+    text.endTime = 30;
     annotationBlock.add(text);
 
 
@@ -66,15 +66,15 @@ Template["videoPane"].onRendered(function () {
     dataTable.setEditable(true);
     var index=0;
     dataTable.addColumn(index++, {id: "label", header: "Name", width: 100, sort: "string", editor: "text"});
-    dataTable.addColumn(index++, {id: "start", header: "Start", width: 100, sort: "string", editor: "text"});
-    dataTable.addColumn(index++, {id: "end", header: "End", width: 100, sort: "string", editor: "text"});
+    dataTable.addColumn(index++, {id: "startTime", header: "Start", width: 100, sort: "string", editor: "text"});
+    dataTable.addColumn(index++, {id: "endTime", header: "End", width: 100, sort: "string", editor: "text"});
     dataTable.addColumn(index++, {id: "radius", header: "Radius", width: 100, sort: "string", editor: "text"});
     dataTable.addColumn(index++, {id: "y", header: "x", width: 100, sort: "string", editor: "text"});
     dataTable.addColumn(index++, {id: "x", header: "y", width: 100, sort: "string", editor: "text"});
 
     //dataTable.addColumn(1, {id: "label", header: "Name", width: 150, sort: "string", editor: "text"});
-    //dataTable.addColumn(2, {id: "start", header: "Start", width: 150, sort: "string", editor: "text"});
-    //dataTable.addColumn(3, {id: "end", header: "End", width: 150, sort: "string", editor: "text"});
+    //dataTable.addColumn(2, {id: "startTime", header: "Start", width: 150, sort: "string", editor: "text"});
+    //dataTable.addColumn(3, {id: "endTime", header: "End", width: 150, sort: "string", editor: "text"});
 
 
     dataTable.setList(annotationBlock.annotationList);

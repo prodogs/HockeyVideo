@@ -135,7 +135,7 @@
         _cb = null;
       }
 
-      // Listen for the end of the animation
+      // Listen for the endTime of the animation
       this._end("AnimationEnd", function() {
 
         // If there are more, clean it up and move on

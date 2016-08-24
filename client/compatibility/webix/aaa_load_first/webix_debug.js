@@ -466,15 +466,15 @@ webix.log = function(type,message,details){
 		if (details) 
 			window.console.log(details);
 	}	
-	/*jsl:end*/
+	/*jsl:endTime*/
 };
 //register rendering time from call point 
 webix.log_full_time = function(name){
 	webix._start_time_log = new Date();
-	webix.log("Timing start ["+name+"]");
+	webix.log("Timing startTime ["+name+"]");
 	window.setTimeout(function(){
 		var time = new Date();
-		webix.log("Timing end ["+name+"]:"+(time.valueOf()-webix._start_time_log.valueOf())/1000+"s");
+		webix.log("Timing endTime ["+name+"]:"+(time.valueOf()-webix._start_time_log.valueOf())/1000+"s");
 	},1);
 };
 //register execution time from call point
@@ -482,10 +482,10 @@ webix.log_time = function(name){
 	var fname = "_start_time_log"+name;
 	if (!webix[fname]){
 		webix[fname] = new Date();
-		webix.log("Info","Timing start ["+name+"]");
+		webix.log("Info","Timing startTime ["+name+"]");
 	} else {
 		var time = new Date();
-		webix.log("Info","Timing end ["+name+"]:"+(time.valueOf()-webix[fname].valueOf())/1000+"s");
+		webix.log("Info","Timing endTime ["+name+"]:"+(time.valueOf()-webix[fname].valueOf())/1000+"s");
 		webix[fname] = null;
 	}
 };
@@ -614,7 +614,7 @@ webix.PowerArray={
 	},	
 	//add element to collection at specific position
 	insertAt:function(data,pos){
-		if (!pos && pos!==0)	//add to the end by default
+		if (!pos && pos!==0)	//add to the endTime by default
 			this.push(data);
 		else {	
 			var b = this.splice(pos,(this.length-pos));
@@ -803,7 +803,7 @@ webix.html={
 		else if (node && node.parentNode)
 			node.parentNode.removeChild(node);
 	},
-	//insert new node before sibling, or at the end if sibling doesn't exist
+	//insert new node before sibling, or at the endTime if sibling doesn't exist
 	insertBefore: function(node,before,rescue){
 		if (!node) return;
 		if (before && before.parentNode)
@@ -1095,7 +1095,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 */
 
-/* jshint ignore:start */
+/* jshint ignore:startTime */
 (function (self) {
   var now = typeof setImmediate !== 'undefined' ? setImmediate : function(cb) {
     setTimeout(cb, 0)
@@ -1375,7 +1375,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       var fn = args.shift()
       try {
 
-        // Add our custom promise callback to the end of the arguments
+        // Add our custom promise callback to the endTime of the arguments
         args.push(function(err, val){
           if(err) {
             return def.reject(err)
@@ -1393,7 +1393,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   
   self.promise = promiz
 })(webix);
-/* jshint ignore:end */
+/* jshint ignore:endTime */
 
 (function(){
 
@@ -6534,7 +6534,7 @@ webix.DragControl={
 		webix.event(node,webix.env.mouse.down,this._preStart,{bind:node});
 		webix.event(node,"dragstart",webix.html.preventEvent);
 	},
-	//logic of drag - start, we are not creating drag immediately, instead of that we hears mouse moving
+	//logic of drag - startTime, we are not creating drag immediately, instead of that we hears mouse moving
 	_preStart:function(e){
 		if (webix.DragControl._active){
 			//if we have nested drag areas, use the top one and ignore the inner one
@@ -6573,7 +6573,7 @@ webix.DragControl={
 		if(!webix.DragControl._html)
 			if (!webix.DragControl.createDrag(webix.DragControl._saved_event)) return;
 		
-		webix.DragControl.sendSignal("start"); //useless for now
+		webix.DragControl.sendSignal("startTime"); //useless for now
 		webix.DragControl._webix_drag_mm = webix.event(document.body,webix.env.mouse.move,webix.DragControl._moveDrag);
 		webix.DragControl._webix_drag_mu = webix.event(document.body,webix.env.mouse.up,webix.DragControl._stopDrag);
 		webix.DragControl._moveDrag(e);
@@ -6644,7 +6644,7 @@ webix.DragControl={
 	},
 	//mostly useless for now, can be used to add cross-frame dnd
 	sendSignal:function(signal){
-		webix.DragControl.active=(signal=="start");
+		webix.DragControl.active=(signal=="startTime");
 	},
 	
 	//return master for html area
@@ -6709,7 +6709,7 @@ webix.DragControl={
 	_skip_mark:function(){
 		webix.DragControl._skip=true;
 	},
-	//after dnd end, remove all traces and used html elements
+	//after dnd endTime, remove all traces and used html elements
 	destroyDrag:function(e){
 		var a=webix.DragControl._active;
 		var master = this._drag_masters[a.webix_drag];
@@ -10743,7 +10743,7 @@ webix.DataStore.prototype={
 		//in case of treetable order is sent as 3rd parameter
 		var order = arguments[2]||this.order;
 		
-		//by default item is added to the end of the list
+		//by default item is added to the endTime of the list
 		var data_size = order.length;
 		
 		if (webix.isUndefined(index) || index < 0)
@@ -10761,7 +10761,7 @@ webix.DataStore.prototype={
 		order.insertAt(id,index);
 		if (this._filter_order){	//adding during filtering
 			//we can't know the location of new item in full dataset, making suggestion
-			//put at end of original dataset by default
+			//put at endTime of original dataset by default
 			var original_index = this._filter_order.length;
 			//if some data exists, put at the same position in original and filtered lists
 			if (this.order.length)
@@ -10975,7 +10975,7 @@ webix.DataStore.prototype={
 					};
 				else{
 					value = value.toString().toLowerCase();
-					filter = function(obj,value){	//default filter - string start from, case in-sensitive
+					filter = function(obj,value){	//default filter - string startTime from, case in-sensitive
 						webix.assert(obj, "Client side filtering can't be used with dynamic loading");
 						return (obj[text]||"").toString().toLowerCase().indexOf(value)!=-1;
 					};
@@ -11268,7 +11268,7 @@ webix.Scrollable = {
 
 			//if current scroll is outside of data area
 			if(dx<0 || dy < 0){
-				//scroll to the end of data area
+				//scroll to the endTime of data area
 				var x = (dx<0?Math.min(-dx - s.x,0):- s.x);
 				var y = (dy<0?Math.min(-dy - s.y,0):- s.y);
 				webix.Touch._set_matrix(this._dataobj, x, y, 0);
@@ -13259,9 +13259,9 @@ webix.TreeStore = {
 			//branch can be shared bettwen collections, ignore such cases
 			if (this.order !== origin){
 				//we can't know the location of new item in full dataset, making suggestion
-				//put at end by default
+				//put at endTime by default
 				var original_index = origin.length;
-				//put at start only if adding to the start and some data exists
+				//put at startTime only if adding to the startTime and some data exists
 				if (!index && this.branch[pid||0].length)
 					original_index = 0;
 
@@ -13507,7 +13507,7 @@ webix.TreeAPI = {
 						this._repeat_set_state(this, state);
 						this.refresh();
 						return 0;
-						//end processing
+						//endTime processing
 					}
 				}
 			}
@@ -13559,7 +13559,7 @@ webix.TreeCollection = webix.proto({
 		to - target object
 		source - id of dragged item(s)
 		target - id of drop target, null for drop on empty space
-		start - id from which DND was started
+		startTime - id from which DND was started
 */
 
 
@@ -14414,7 +14414,7 @@ webix.KeysNavigation = {
             webix.UIManager.addHotKey("pageup", 	this._navigation_helper("pgup"));
             webix.UIManager.addHotKey("pagedown",   this._navigation_helper("pgdown"));
             webix.UIManager.addHotKey("home", 	    this._navigation_helper("top"));
-            webix.UIManager.addHotKey("end", 		this._navigation_helper("bottom"));
+            webix.UIManager.addHotKey("endTime", 		this._navigation_helper("bottom"));
             webix.UIManager.addHotKey("right", 	    this._navigation_helper("right"));
             webix.UIManager.addHotKey("left",		this._navigation_helper("left"));
 
@@ -15142,7 +15142,7 @@ webix.protoUI({
 	render:function(id,data,type,after){
 		var i, lastChain;
 
-		//start filtering processing=>
+		//startTime filtering processing=>
 		this._nested_chain = webix.copy(this._nested_chain);
 		this._nested_cursor = webix.copy(this._nested_cursor);
 
@@ -15161,7 +15161,7 @@ webix.protoUI({
 			this._nested_cursor =  [lastChain];
 			this._nested_chain.pop();
 		}
-		//<= end filtering processing
+		//<= endTime filtering processing
 
 		if (this._in_animation) {
             return webix.delay(this.render, this, arguments, 100);
@@ -15520,7 +15520,7 @@ webix.EditAbility={
 				this._changeEditorId(oldid, newid);
 			}, this));
 
-		//when clicking on row - will start editor
+		//when clicking on row - will startTime editor
 		this.attachEvent("onItemClick", function(id){
 			if (this._settings.editable && this._settings.editaction == "click")
 				this.edit(id);
@@ -16404,7 +16404,7 @@ webix.VirtualRenderStack={
 			node._filled = true;
 			
 			/*
-				if new row is at start of placeholder - decrease placeholder's height
+				if new row is at startTime of placeholder - decrease placeholder's height
 				else if new row takes whole placeholder - remove placeholder from DOM
 				else 
 					we are inserting row in the middle of existing placeholder
@@ -16488,7 +16488,7 @@ webix.protoUI({
 	$init:function(config){
 		if (config.sizeToContent)
 			//method need to be called before data-loaders
-			//so we are using unshift to place it at start
+			//so we are using unshift to place it at startTime
 			this.$ready.unshift(this._after_init_call);
 		var prerender = config.prerender || this.defaults.prerender;
 		if (prerender === false || (prerender !== true && config.height !== "auto" && !config.autoheight))
@@ -18101,7 +18101,7 @@ webix.protoUI({
 					//scroll to right border
 					summ += this._columns[column_ind].width - this._center_width;
 				}	
-				/*jsl:end*/
+				/*jsl:endTime*/
 				this._x_scroll.scrollTo(summ);
 			}
 		}		
@@ -22274,7 +22274,7 @@ webix.extend(webix.ui.datatable,{
 webix.extend(webix.ui.datatable, {
 
 	/////////////////////////
-	//    edit start       //
+	//    edit startTime       //
 	/////////////////////////
 	_get_editor_type:function(id){
 		return this.getColumnConfig(id.column).editor;
@@ -22692,7 +22692,7 @@ webix.extend(webix.ui.datatable, {
 				if (!this.isColumnVisible(ind[j])){
 					//hidden column
 					if (header && header.$colspan && spanSize <= 0){
-						//start of colspan in hidden
+						//startTime of colspan in hidden
 						spanSize = header.colspan = header.$colspan;
 						isHidden = spanSource = header;
 					}
@@ -22703,11 +22703,11 @@ webix.extend(webix.ui.datatable, {
 				} else {
 					//visible column
 					if (isHidden && spanSize > 0 && spanSource && spanSource.colspan > 0){
-						//bit start of colspan is hidden
+						//bit startTime of colspan is hidden
 						header = config.header[i] = spanSource;
 						spanSource = header;
 					} else if (header && header.$colspan && spanSize <= 0){
-						//visible start of colspan
+						//visible startTime of colspan
 						spanSize = header.colspan = header.$colspan;
 						spanSource = header;
 					}
@@ -22975,7 +22975,7 @@ webix.extend(webix.ui.datatable, {
 							var start_index = this.getColumnIndex(start);
 							var end_index = this.getColumnIndex(id.column);
 
-							//on touch devices we need to preserve drag-start element till the end of dnd
+							//on touch devices we need to preserve drag-startTime element till the endTime of dnd
 							if(e.touches){
 								this._dragTarget = e.target;
 								this._dragTarget.style.display = "none";
@@ -23220,7 +23220,7 @@ webix.attachEvent("onDataTable", function(table){
 		"L": function(p){
 			return " L "+ p.x+" "+ p.y;
 		},
-		// Curve: 3 points {x:px,y:py}: two control points and an end point
+		// Curve: 3 points {x:px,y:py}: two control points and an endTime point
 		"C": function(cp0, cp1, p){
 			return " C "+cp0.x + " "+cp0.y+" "+cp1.x + " "+cp1.y+" "+p.x + " "+p.y;
 		},
@@ -23324,7 +23324,7 @@ webix.attachEvent("onDataTable", function(table){
 			Line = webix.Sparklines.types.line.prototype,
 			renderer = webix._SVG;
 
-		// draw area
+		// activiate area
 		points = this.getPoints(data, width, height);
 		path = renderer.definePath(Line._getLinePoints(points),true);
 
@@ -23332,13 +23332,13 @@ webix.attachEvent("onDataTable", function(table){
 			styles = this._applyColor(renderer,config.color);
 
 		graph = renderer.group(renderer.getPath(path,'webix_sparklines_area'+(styles?' '+styles.area:'')));
-		// draw line
+		// activiate line
 		points.splice(points.length - 3, 3);
 		path = renderer.definePath(Line._getLinePoints(points));
 		graph += renderer.group(renderer.getPath(path,'webix_sparklines_line'+(styles?' '+styles.line:'')));
-		// draw items
+		// activiate items
 		graph += Line._drawItems(renderer, points, config.radius, 'webix_sparklines_item'+(styles?' '+styles.item:''));
-		// draw event areas
+		// activiate event areas
 		eventRadius = Math.min(data.length?(width-2*(config.paddingX||0))/data.length:0,config.eventRadius);
 		graph += Line._drawEventItems(renderer, points, eventRadius);
 		return  renderer.draw(graph, width, height, 'webix_sparklines_area_chart'+(config.css?' '+config.css:''));
@@ -23388,7 +23388,7 @@ webix.attachEvent("onDataTable", function(table){
 			points = this.getPoints(data, width, height),
 			renderer = webix._SVG;
 
-		// draw bars
+		// activiate bars
 		for( i = 0; i< points.length; i++){
 			css = (typeof config.itemCss == 'function'?config.itemCss.call(this,data[i]):(config.itemCss||''));
 			if (config.negativeColor && data[i] < config.origin)
@@ -23507,12 +23507,12 @@ webix.attachEvent("onDataTable", function(table){
 		var config = this.config;
 		var renderer = webix._SVG;
 		var styles = config.color?this._applyColor(renderer,config.color):null;
-		// draw line
+		// activiate line
 		var path = renderer.definePath(this._getLinePoints(points));
 		var graph = renderer.group(renderer.getPath(path,'webix_sparklines_line'+(styles?' '+styles.line:'')));
-		// draw items
+		// activiate items
 		graph += this._drawItems(renderer, points, config.radius, 'webix_sparklines_item'+(styles?' '+styles.item:''));
-		// draw event items
+		// activiate event items
 		var eventRadius = Math.min(data.length?(width-2*(config.paddingX||0))/data.length:0,config.eventRadius);
 		graph += this._drawEventItems(renderer, points, eventRadius);
 		return  renderer.draw(graph, width, height, "webix_sparklines_line_chart"+(config.css?' '+config.css:''));
@@ -23620,7 +23620,7 @@ webix.attachEvent("onDataTable", function(table){
 			// center
 			x0 = width/2, y0 = height/2;
 
-		// draw sectors
+		// activiate sectors
 		if(typeof color != "function")
 			color = function(){return color;};
 		sectors = "";
@@ -23631,7 +23631,7 @@ webix.attachEvent("onDataTable", function(table){
 		}
 		graph = renderer.group(sectors);
 
-		// draw event areas
+		// activiate event areas
 		sectors = "";
 		for(i =0; i < points.length; i++){
 			sectors += renderer.getSector({x:x0,y:y0},r,points[i][0],points[i][1],'webix_sparklines_event_area',{"webix_area":i});
@@ -23696,13 +23696,13 @@ webix.attachEvent("onDataTable", function(table){
 			renderer = webix._SVG,
 			styles = config.color?this._applyColor(renderer,config.color):null;
 
-		// draw spline
+		// activiate spline
 		graph += renderer.group(renderer.getCurve(points, 'webix_sparklines_line'+(styles?' '+styles.line:'')));
 
 		var linePoints = Line.getPoints.call(this,data, width, height);
-		// draw items
+		// activiate items
 		graph += Line._drawItems(renderer, linePoints, config.radius, 'webix_sparklines_item'+(styles?' '+styles.item:''));
-		// draw event items
+		// activiate event items
 		var eventRadius = Math.min(data.length?(width-2*(config.paddingX||0))/data.length:0,config.eventRadius);
 		graph += Line._drawEventItems(renderer, linePoints, eventRadius);
 		return  renderer.draw(graph, width, height,"webix_sparklines_line_chart"+(config.css?' '+config.css:''));
@@ -23731,7 +23731,7 @@ webix.attachEvent("onDataTable", function(table){
 		}
 		px = this._getControlPoints(x);
 		py = this._getControlPoints(y);
-		/*updates path settings, the browser will draw the new spline*/
+		/*updates path settings, the browser will activiate the new spline*/
 		for ( i=0;i<points.length-1;i++){
 			result.push([points[i],{x:px[0][i],y:py[0][i]},{x:px[1][i],y:py[1][i]},points[i+1]]);
 		}
@@ -23799,19 +23799,19 @@ webix.attachEvent("onDataTable", function(table){
 			styles = config.color?this._applyColor(renderer,config.color):null;
 
 		var points = this.getPoints(data, width, height);
-		// draw area
+		// activiate area
 		var linePoints = points.splice(points.length - 3, 3);
 		var linePath = renderer._linePoints(linePoints);
 		linePath[0][0] = "L";
 		var areaPoints = renderer._curvePoints(points).concat(linePath);
 		var graph = renderer.group(renderer.getPath(renderer.definePath(areaPoints),'webix_sparklines_area'+(styles?' '+styles.area:''), true));
-		// draw line
+		// activiate line
 		graph += renderer.group(renderer.getPath(renderer.definePath(renderer._curvePoints(points)),'webix_sparklines_line'+(styles?' '+styles.line:'')));
 
 		var itemPoints = Line.getPoints.call(this,data, width, height);
-		// draw items
+		// activiate items
 		graph += Line._drawItems(renderer, itemPoints, config.radius, 'webix_sparklines_item'+(styles?' '+styles.item:''));
-		// draw event items
+		// activiate event items
 		var eventRadius = Math.min(data.length?(width-2*(config.paddingX||0))/data.length:0,config.eventRadius);
 		graph += Line._drawEventItems(renderer, itemPoints, eventRadius);
 		return  renderer.draw(graph, width, height, "webix_sparklines_splinearea_chart"+(config.css?' '+config.css:''));
@@ -24959,7 +24959,7 @@ webix.protoUI({
 			this._definePreset(config);
 		}
 
-		// move series to end of configuration properties hash
+		// move series to endTime of configuration properties hash
 		// so it will be parsed after other settings
 		if(config.series){
 			var series = config.series;
@@ -25809,7 +25809,7 @@ webix.protoUI({
 		return text;
 	},
 	/**
-	*   draw legend colorful marder
+	*   activiate legend colorful marder
 	*   @param: ctx - canvas object
 	*   @param: x - the horizontal position of the marker
 	*   @param: y - the vertical position of the marker
@@ -25828,7 +25828,7 @@ webix.protoUI({
 			ctx.beginPath();
 			ctx.lineWidth = marker.height;
 			ctx.lineCap = marker.type;
-			/*start of marker*/
+			/*startTime of marker*/
 			x += ctx.lineWidth/2+5;
 			y += height/2;
 			ctx.moveTo(x,y);
@@ -26015,8 +26015,8 @@ webix.protoUI({
 	/**
 	*   returns the x and y position
     *   @param: a - angle
-    *   @param: x - start x position
-    *   @param: y - start y position
+    *   @param: x - startTime x position
+    *   @param: y - startTime y position
 	*   @param: r - destination to the point
 	*/
      _getPositionByAngle:function(a,x,y,r){
@@ -26448,7 +26448,7 @@ webix.extend(webix.ui.chart, {
 		unit = (relValue?totalHeight/relValue:relValue);
 
 		if(!yax&&!(this._settings.origin!="auto"&&xax)){
-			/*defines start value for better representation of small values*/
+			/*defines startTime value for better representation of small values*/
 			startValue = 10;
 			unit = (relValue?(totalHeight-startValue)/relValue:startValue);
 		}
@@ -26503,7 +26503,7 @@ webix.extend(webix.ui.chart, {
 			value -= minValue;
 			value *= valueFactor;
 
-			/*start point (bottom left)*/
+			/*startTime point (bottom left)*/
 			var x0 = point0.x + barOffset + i*cellWidth+(barWidth+1)*seriesIndex;
 			var y0 = point1.y;
 
@@ -26512,7 +26512,7 @@ webix.extend(webix.ui.chart, {
 				continue;
 			}
 
-			/*takes start value into consideration*/
+			/*takes startTime value into consideration*/
 			if(!yax&&!(this._settings.origin!="auto"&&xax)) value += startValue/unit;
 
 			var color = gradient||this._settings.color.call(this,data[i]);
@@ -26618,8 +26618,8 @@ webix.extend(webix.ui.chart, {
 	/**
 	 *   sets points for bar and returns the position of the bottom right point
 	 *   @param: ctx - canvas object
-	 *   @param: x0 - the x position of start point
-	 *   @param: y0 - the y position of start point
+	 *   @param: x0 - the x position of startTime point
+	 *   @param: y0 - the y position of startTime point
 	 *   @param: barWidth - bar width
 	 *   @param: radius - the rounding radius of the top
 	 *   @param: unit - the value defines the correspondence between item value and bar height
@@ -26636,9 +26636,9 @@ webix.extend(webix.ui.chart, {
 			if(cosA<=1&&cosA>=-1)
 				angle_corr = -Math.acos(cosA)+Math.PI/2;
 		}
-		/*start*/
+		/*startTime*/
 		ctx.moveTo(x0+offset,y0);
-		/*start of left rounding*/
+		/*startTime of left rounding*/
 		var y1 = y0 - Math.floor(unit*value) + radius + (radius?0:offset);
 		if(radius<unit*value)
 			ctx.lineTo(x0+offset,y1);
@@ -26647,7 +26647,7 @@ webix.extend(webix.ui.chart, {
 
 		if (radius&&radius>0)
 			ctx.arc(x2,y1,Math.max(radius-offset,0),-Math.PI+angle_corr,-Math.PI/2,false);
-		/*start of right rounding*/
+		/*startTime of right rounding*/
 		var x3 = x0 + barWidth - radius - offset;
 		var y3 = y1 - radius + (radius?offset:0);
 		ctx.lineTo(x3,y3);
@@ -26657,7 +26657,7 @@ webix.extend(webix.ui.chart, {
 		/*bottom right point*/
 		var x5 = x0 + barWidth-offset;
 		ctx.lineTo(x5,y0);
-		/*line to the start point*/
+		/*line to the startTime point*/
 		if(!skipBottom){
 			ctx.lineTo(x0+offset,y0);
 		}
@@ -26712,11 +26712,11 @@ webix.extend(webix.ui.chart, {
 
 			this._mapStart = point0;
 			for(i = 1; i <= items.length; i++){
-				//line start position
+				//line startTime position
 				x1 = items[i-1].x;
 				y1 = items[i-1].y;
 				if(i<items.length){
-					//line end position
+					//line endTime position
 					x2 = items[i].x;
 					y2 = items[i].y;
 					//line
@@ -26832,8 +26832,8 @@ webix.extend(webix.ui.chart, {
 	/**
 	*   gets the vertical position of the item
 	*   @param: data - data object
-	*   @param: y0 - the y position of chart start
-	*   @param: y1 - the y position of chart end
+	*   @param: y0 - the y position of chart startTime
+	*   @param: y1 - the y position of chart endTime
 	*   @param: params - the object with elements: minValue, maxValue, unit, valueFactor (the value multiple of 10)
 	*/
 	_getPointY: function(data,point0,point1,params){
@@ -26904,7 +26904,7 @@ webix.extend(webix.ui.chart, {
 
 		params.startValue = 0;
 		if(!yax){
-			/*defines start value for better representation of small values*/
+			/*defines startTime value for better representation of small values*/
 			params.startValue = 10;
 			if(params.unit!=params.totalHeight)
 				params.unit = (relValue?(params.totalHeight - params.startValue)/relValue:10);
@@ -26957,7 +26957,7 @@ webix.extend(webix.ui.chart, {
 
 		unit = (relValue?totalWidth/relValue:10);
 		if(!xax){
-			/*defines start value for better representation of small values*/
+			/*defines startTime value for better representation of small values*/
 			startValue = 10;
 			unit = (relValue?(totalWidth-startValue)/relValue:10);
 		}
@@ -26999,7 +26999,7 @@ webix.extend(webix.ui.chart, {
 			value -= minValue;
 			value *= valueFactor;
 
-			/*start point (bottom left)*/
+			/*startTime point (bottom left)*/
 			x0 = point0.x;
 			y0 = point0.y+ barOffset + i*cellWidth+(barWidth+1)*sIndex;
 
@@ -27011,7 +27011,7 @@ webix.extend(webix.ui.chart, {
 				value = 0;
 			}
 
-			/*takes start value into consideration*/
+			/*takes startTime value into consideration*/
 			if(!xax) value += startValue/unit;
 			color = gradient||this._settings.color.call(this,data[i]);
 
@@ -27046,8 +27046,8 @@ webix.extend(webix.ui.chart, {
 	/**
 	 *   sets points for bar and returns the position of the bottom right point
 	 *   @param: ctx - canvas object
-	 *   @param: x0 - the x position of start point
-	 *   @param: y0 - the y position of start point
+	 *   @param: x0 - the x position of startTime point
+	 *   @param: y0 - the y position of startTime point
 	 *   @param: barWidth - bar width
 	 *   @param: radius - the rounding radius of the top
 	 *   @param: unit - the value defines the correspondence between item value and bar height
@@ -27062,9 +27062,9 @@ webix.extend(webix.ui.chart, {
 			var sinA = (radius-unit*value)/radius;
 			angle_corr = -Math.asin(sinA)+Math.PI/2;
 		}
-		/*start*/
+		/*startTime*/
 		ctx.moveTo(x0,y0+offset);
-		/*start of left rounding*/
+		/*startTime of left rounding*/
 		var x1 = x0 + unit*value - radius - (radius?0:offset);
 		x1 = Math.max(x0,x1);
 		if(radius<unit*value)
@@ -27073,7 +27073,7 @@ webix.extend(webix.ui.chart, {
 		var y2 = y0 + radius;
 		if (radius&&radius>0)
 			ctx.arc(x1,y2,radius-offset,-Math.PI/2+angle_corr,0,false);
-		/*start of right rounding*/
+		/*startTime of right rounding*/
 		var y3 = y0 + barWidth - radius - (radius?0:offset);
 		var x3 = x1 + radius - (radius?offset:0);
 		ctx.lineTo(x3,y3);
@@ -27083,7 +27083,7 @@ webix.extend(webix.ui.chart, {
 		/*bottom right point*/
 		var y5 = y0 + barWidth-offset;
 		ctx.lineTo(x0,y5);
-		/*line to the start point*/
+		/*line to the startTime point*/
 		if(!skipLeft){
 			ctx.lineTo(x0,y0+offset);
 		}
@@ -27318,7 +27318,7 @@ webix.extend(webix.ui.chart, {
 			if(this._logScaleCalc)
 				value = this._log10(value);
 
-			/*start point (bottom left)*/
+			/*startTime point (bottom left)*/
 			x0 = point0.x + barOffset + i*cellWidth;
 
 
@@ -27398,7 +27398,7 @@ webix.extend(webix.ui.chart, {
 			/*defines a map area for a bar*/
 			map.addRect(data[i].id,[x0-point0.x,points[1]-point0.y,points[0]-point0.x,data[i][negValue?"$startYN":"$startY"]-point0.y],sIndex);
 
-			/*the start position for the next series*/
+			/*the startTime position for the next series*/
 
 			data[i][negValue?"$startYN":"$startY"] = points[1];
 
@@ -27407,8 +27407,8 @@ webix.extend(webix.ui.chart, {
 	/**
 	 *   sets points for bar and returns the position of the bottom right point
 	 *   @param: ctx - canvas object
-	 *   @param: x0 - the x position of start point
-	 *   @param: y0 - the y position of start point
+	 *   @param: x0 - the x position of startTime point
+	 *   @param: y0 - the y position of startTime point
 	 *   @param: barWidth - bar width
 	 *   @param: radius - the rounding radius of the top
 	 *   @param: unit - the value defines the correspondence between item value and bar height
@@ -27417,7 +27417,7 @@ webix.extend(webix.ui.chart, {
 	 *   @param: minY - the minimum y position for the bars ()
 	 */
 	_setStakedBarPoints:function(ctx,x0,y0,barWidth,y1,offset,minY,skipBottom){
-		/*start*/
+		/*startTime*/
 		ctx.moveTo(x0,y0);
 		/*maximum height limit*/
 
@@ -27431,7 +27431,7 @@ webix.extend(webix.ui.chart, {
 		/*bottom right point*/
 		var x5 = x0 + barWidth;
 		ctx.lineTo(x5,y0);
-		/*line to the start point*/
+		/*line to the startTime point*/
 		if(!skipBottom){
 			ctx.lineTo(x0,y0);
 		}
@@ -27486,7 +27486,7 @@ webix.extend(webix.ui.chart, {
 		var unit = (relValue?total_width/relValue:10);
 		var startValue = 0;
 		if(!yax){
-			/*defines start value for better representation of small values*/
+			/*defines startTime value for better representation of small values*/
 			startValue = 10;
 			unit = (relValue?(total_width-startValue)/relValue:10);
 		}
@@ -27529,7 +27529,7 @@ webix.extend(webix.ui.chart, {
 			value -= minValue;
 			value *= valueFactor;
 
-			/*start point (bottom left)*/
+			/*startTime point (bottom left)*/
 			var x0 = point0.x;
 			var y0 = point0.y+ barOffset + i*cellWidth;
 
@@ -27543,7 +27543,7 @@ webix.extend(webix.ui.chart, {
 				continue;
 			}
 
-			/*takes start value into consideration*/
+			/*takes startTime value into consideration*/
 			if(!yax) value += startValue/unit;
 			var color = this._settings.color.call(this,data[i]);
 
@@ -27574,7 +27574,7 @@ webix.extend(webix.ui.chart, {
 			this.canvases[sIndex].renderTextAt("middle",true,data[i].$startX+(points[0]-data[i].$startX)/2-1, y0+(points[1]-y0)/2, this._settings.label(data[i]));
 			/*defines a map area for a bar*/
 			map.addRect(data[i].id,[data[i].$startX-point0.x,y0-point0.y,points[0]-point0.x,points[1]-point0.y],sIndex);
-			/*the start position for the next series*/
+			/*the startTime position for the next series*/
 			data[i].$startX = points[0];
 		}
 	}
@@ -27861,7 +27861,7 @@ webix.extend(webix.ui.chart,{
 			// bottom right point
 			path.push([x,setOffset(i-1,point1.y)]);
 
-			// lower border from the end to start
+			// lower border from the endTime to startTime
 			if(sIndex){
 				for(i=data.length-2; i > 0; i --){
 					x -= params.cellWidth ;
@@ -27871,7 +27871,7 @@ webix.extend(webix.ui.chart,{
 				}
 			}
 
-			// go to start point
+			// go to startTime point
 			path.push([path[0][0],path[0][1]]);
 
 			// filling path
@@ -28893,7 +28893,7 @@ webix.protoUI({
 
 
 
-		//store width and height of draw area
+		//store width and height of activiate area
 		if (!this._zoom_size){
 			/*this._reserve_box_height = sections[index].offsetHeight +(index==2?sections[1].offsetHeight:0);*/
 
@@ -35573,7 +35573,7 @@ webix.protoUI({
 		if(leaves){
 			sizes = this.$xy[pId];
 
-			// draw items inside list container
+			// activiate items inside list container
 			if(type == "list" && !this._isListBlocks()){
 				html += this.type.templateListStart.call(this,pItem, this.type, marks);
 			}
@@ -35628,7 +35628,7 @@ webix.protoUI({
 			if(!pId && sumTotalWidth){
 				this._dataobj.style.width = sumTotalWidth+this.type.padding*2+"px";
 			}
-			// draw child branches
+			// activiate child branches
 			for( i=0; i < leaves.length; i++){
 				id = leaves[i];
 
@@ -35791,7 +35791,7 @@ webix.protoUI({
 		item = this.getItem(id);
 		if(leaves && leaves.length){
 			p = this.$xy[id];
-			// draw a vertical line between parent and nodes
+			// activiate a vertical line between parent and nodes
 			if(id){
 
 				x12 = parseInt(p.left+ p.width/2,10) +0.5;

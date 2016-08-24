@@ -558,7 +558,7 @@ interface UnderscoreStringStaticExports {
      * ('FALSE') => false
      * ('random') => undefined
      * ('truthy', ['truthy'], ['falsy']) => true
-     * ('true only at start', [/^true/]) => true
+     * ('true only at startTime', [/^true/]) => true
      * @param str
      * @param trueValues
      * @param falseValues

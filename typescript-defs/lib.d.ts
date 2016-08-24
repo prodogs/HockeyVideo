@@ -289,7 +289,7 @@ interface String {
 
     /**
       * Returns a string that contains the concatenation of two or more strings.
-      * @param strings The strings to append to the end of the string.  
+      * @param strings The strings to append to the endTime of the string.
       */
     concat(...strings: string[]): string;
 
@@ -303,7 +303,7 @@ interface String {
     /**
       * Returns the last occurrence of a substring in the string.
       * @param searchString The substring to search for.
-      * @param position The index at which to begin searching. If omitted, the search begins at the end of the string.
+      * @param position The index at which to begin searching. If omitted, the search begins at the endTime of the string.
       */
     lastIndexOf(searchString: string, position?: number): number;
 
@@ -368,8 +368,8 @@ interface String {
     /**
       * Returns a section of a string.
       * @param start The index to the beginning of the specified portion of stringObj. 
-      * @param end The index to the end of the specified portion of stringObj. The substring includes the characters up to, but not including, the character indicated by end. 
-      * If this value is not specified, the substring continues to the end of stringObj.
+      * @param end The index to the endTime of the specified portion of stringObj. The substring includes the characters up to, but not including, the character indicated by endTime.
+      * If this value is not specified, the substring continues to the endTime of stringObj.
       */
     slice(start?: number, end?: number): string;
 
@@ -390,8 +390,8 @@ interface String {
     /**
       * Returns the substring at the specified location within a String object. 
       * @param start The zero-based index number indicating the beginning of the substring.
-      * @param end Zero-based index number indicating the end of the substring. The substring includes the characters up to, but not including, the character indicated by end.
-      * If end is omitted, the characters from start through the end of the original string are returned.
+      * @param end Zero-based index number indicating the endTime of the substring. The substring includes the characters up to, but not including, the character indicated by endTime.
+      * If endTime is omitted, the characters from startTime through the endTime of the original string are returned.
       */
     substring(start: number, end?: number): string;
 
@@ -989,12 +989,12 @@ interface Array<T> {
     toLocaleString(): string;
     /**
       * Combines two or more arrays.
-      * @param items Additional items to add to the end of array1.
+      * @param items Additional items to add to the endTime of array1.
       */
     concat<U extends T[]>(...items: U[]): T[];
     /**
       * Combines two or more arrays.
-      * @param items Additional items to add to the end of array1.
+      * @param items Additional items to add to the endTime of array1.
       */
     concat(...items: T[]): T[];
     /**
@@ -1022,7 +1022,7 @@ interface Array<T> {
     /** 
       * Returns a section of an array.
       * @param start The beginning of the specified portion of the array.
-      * @param end The end of the specified portion of the array.
+      * @param end The endTime of the specified portion of the array.
       */
     slice(start?: number, end?: number): T[];
 
@@ -1034,21 +1034,21 @@ interface Array<T> {
 
     /**
       * Removes elements from an array and, if necessary, inserts new elements in their place, returning the deleted elements.
-      * @param start The zero-based location in the array from which to start removing elements.
+      * @param start The zero-based location in the array from which to startTime removing elements.
       */
     splice(start: number): T[];
 
     /**
       * Removes elements from an array and, if necessary, inserts new elements in their place, returning the deleted elements.
-      * @param start The zero-based location in the array from which to start removing elements.
+      * @param start The zero-based location in the array from which to startTime removing elements.
       * @param deleteCount The number of elements to remove.
       * @param items Elements to insert into the array in place of the deleted elements.
       */
     splice(start: number, deleteCount: number, ...items: T[]): T[];
 
     /**
-      * Inserts new elements at the start of an array.
-      * @param items  Elements to insert at the start of the Array.
+      * Inserts new elements at the startTime of an array.
+      * @param items  Elements to insert at the startTime of the Array.
       */
     unshift(...items: T[]): number;
 
@@ -1068,14 +1068,14 @@ interface Array<T> {
 
     /**
       * Determines whether all the members of an array satisfy the specified test.
-      * @param callbackfn A function that accepts up to three arguments. The every method calls the callbackfn function for each element in array1 until the callbackfn returns false, or until the end of the array.
+      * @param callbackfn A function that accepts up to three arguments. The every method calls the callbackfn function for each element in array1 until the callbackfn returns false, or until the endTime of the array.
       * @param thisArg An object to which the this keyword can refer in the callbackfn function. If thisArg is omitted, undefined is used as the this value.
       */
     every(callbackfn: (value: T, index: number, array: T[]) => boolean, thisArg?: any): boolean;
 
     /**
       * Determines whether the specified callback function returns true for any element of an array.
-      * @param callbackfn A function that accepts up to three arguments. The some method calls the callbackfn function for each element in array1 until the callbackfn returns true, or until the end of the array.
+      * @param callbackfn A function that accepts up to three arguments. The some method calls the callbackfn function for each element in array1 until the callbackfn returns true, or until the endTime of the array.
       * @param thisArg An object to which the this keyword can refer in the callbackfn function. If thisArg is omitted, undefined is used as the this value.
       */
     some(callbackfn: (value: T, index: number, array: T[]) => boolean, thisArg?: any): boolean;
@@ -1104,26 +1104,26 @@ interface Array<T> {
     /**
       * Calls the specified callback function for all the elements in an array. The return value of the callback function is the accumulated result, and is provided as an argument in the next call to the callback function.
       * @param callbackfn A function that accepts up to four arguments. The reduce method calls the callbackfn function one time for each element in the array.
-      * @param initialValue If initialValue is specified, it is used as the initial value to start the accumulation. The first call to the callbackfn function provides this value as an argument instead of an array value.
+      * @param initialValue If initialValue is specified, it is used as the initial value to startTime the accumulation. The first call to the callbackfn function provides this value as an argument instead of an array value.
       */
     reduce(callbackfn: (previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T, initialValue?: T): T;
     /**
       * Calls the specified callback function for all the elements in an array. The return value of the callback function is the accumulated result, and is provided as an argument in the next call to the callback function.
       * @param callbackfn A function that accepts up to four arguments. The reduce method calls the callbackfn function one time for each element in the array.
-      * @param initialValue If initialValue is specified, it is used as the initial value to start the accumulation. The first call to the callbackfn function provides this value as an argument instead of an array value.
+      * @param initialValue If initialValue is specified, it is used as the initial value to startTime the accumulation. The first call to the callbackfn function provides this value as an argument instead of an array value.
       */
     reduce<U>(callbackfn: (previousValue: U, currentValue: T, currentIndex: number, array: T[]) => U, initialValue: U): U;
 
     /** 
       * Calls the specified callback function for all the elements in an array, in descending order. The return value of the callback function is the accumulated result, and is provided as an argument in the next call to the callback function.
       * @param callbackfn A function that accepts up to four arguments. The reduceRight method calls the callbackfn function one time for each element in the array. 
-      * @param initialValue If initialValue is specified, it is used as the initial value to start the accumulation. The first call to the callbackfn function provides this value as an argument instead of an array value.
+      * @param initialValue If initialValue is specified, it is used as the initial value to startTime the accumulation. The first call to the callbackfn function provides this value as an argument instead of an array value.
       */
     reduceRight(callbackfn: (previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T, initialValue?: T): T;
     /** 
       * Calls the specified callback function for all the elements in an array, in descending order. The return value of the callback function is the accumulated result, and is provided as an argument in the next call to the callback function.
       * @param callbackfn A function that accepts up to four arguments. The reduceRight method calls the callbackfn function one time for each element in the array. 
-      * @param initialValue If initialValue is specified, it is used as the initial value to start the accumulation. The first call to the callbackfn function provides this value as an argument instead of an array value.
+      * @param initialValue If initialValue is specified, it is used as the initial value to startTime the accumulation. The first call to the callbackfn function provides this value as an argument instead of an array value.
       */
     reduceRight<U>(callbackfn: (previousValue: U, currentValue: T, currentIndex: number, array: T[]) => U, initialValue: U): U;
 
@@ -1218,9 +1218,9 @@ interface Int8Array extends ArrayBufferView {
     set(array: number[], offset?: number): void;
 
     /**
-      * Gets a new Int8Array view of the ArrayBuffer store for this array, referencing the elements at begin, inclusive, up to end, exclusive. 
+      * Gets a new Int8Array view of the ArrayBuffer store for this array, referencing the elements at begin, inclusive, up to endTime, exclusive.
       * @param begin The index of the beginning of the array.
-      * @param end The index of the end of the array.
+      * @param end The index of the endTime of the array.
       */
     subarray(begin: number, end?: number): Int8Array;
 }
@@ -1278,7 +1278,7 @@ interface Uint8Array extends ArrayBufferView {
     /**
       * Gets a new Uint8Array view of the ArrayBuffer Object store for this array, specifying the first and last members of the subarray. 
       * @param begin The index of the beginning of the array.
-      * @param end The index of the end of the array.
+      * @param end The index of the endTime of the array.
       */
     subarray(begin: number, end?: number): Uint8Array;
 }
@@ -1336,7 +1336,7 @@ interface Int16Array extends ArrayBufferView {
     /**
       * Gets a new Int16Array view of the ArrayBuffer Object store for this array, specifying the first and last members of the subarray. 
       * @param begin The index of the beginning of the array.
-      * @param end The index of the end of the array.
+      * @param end The index of the endTime of the array.
       */
     subarray(begin: number, end?: number): Int16Array;
 }
@@ -1394,7 +1394,7 @@ interface Uint16Array extends ArrayBufferView {
     /**
       * Gets a new Uint16Array view of the ArrayBuffer Object store for this array, specifying the first and last members of the subarray.
       * @param begin The index of the beginning of the array.
-      * @param end The index of the end of the array.
+      * @param end The index of the endTime of the array.
       */
     subarray(begin: number, end?: number): Uint16Array;
 }
@@ -1452,7 +1452,7 @@ interface Int32Array extends ArrayBufferView {
     /**
       * Gets a new Int32Array view of the ArrayBuffer Object store for this array, specifying the first and last members of the subarray. 
       * @param begin The index of the beginning of the array.
-      * @param end The index of the end of the array.
+      * @param end The index of the endTime of the array.
       */
     subarray(begin: number, end?: number): Int32Array;
 }
@@ -1510,7 +1510,7 @@ interface Uint32Array extends ArrayBufferView {
     /**
       * Gets a new Int8Array view of the ArrayBuffer Object store for this array, specifying the first and last members of the subarray. 
       * @param begin The index of the beginning of the array.
-      * @param end The index of the end of the array.
+      * @param end The index of the endTime of the array.
       */
     subarray(begin: number, end?: number): Uint32Array;
 }
@@ -1568,7 +1568,7 @@ interface Float32Array extends ArrayBufferView {
     /**
       * Gets a new Float32Array view of the ArrayBuffer Object store for this array, specifying the first and last members of the subarray. 
       * @param begin The index of the beginning of the array.
-      * @param end The index of the end of the array.
+      * @param end The index of the endTime of the array.
       */
     subarray(begin: number, end?: number): Float32Array;
 }
@@ -1626,7 +1626,7 @@ interface Float64Array extends ArrayBufferView {
     /**
       * Gets a new Float64Array view of the ArrayBuffer Object store for this array, specifying the first and last members of the subarray. 
       * @param begin The index of the beginning of the array.
-      * @param end The index of the end of the array.
+      * @param end The index of the endTime of the array.
       */
     subarray(begin: number, end?: number): Float64Array;
 }
@@ -1644,69 +1644,69 @@ declare var Float64Array: {
   */
 interface DataView extends ArrayBufferView {
     /**
-      * Gets the Int8 value at the specified byte offset from the start of the view. There is no alignment constraint; multi-byte values may be fetched from any offset. 
+      * Gets the Int8 value at the specified byte offset from the startTime of the view. There is no alignment constraint; multi-byte values may be fetched from any offset.
       * @param byteOffset The place in the buffer at which the value should be retrieved.
       */
     getInt8(byteOffset: number): number;
 
     /**
-      * Gets the Uint8 value at the specified byte offset from the start of the view. There is no alignment constraint; multi-byte values may be fetched from any offset. 
+      * Gets the Uint8 value at the specified byte offset from the startTime of the view. There is no alignment constraint; multi-byte values may be fetched from any offset.
       * @param byteOffset The place in the buffer at which the value should be retrieved.
       */
     getUint8(byteOffset: number): number;
 
     /**
-      * Gets the Int16 value at the specified byte offset from the start of the view. There is no alignment constraint; multi-byte values may be fetched from any offset. 
+      * Gets the Int16 value at the specified byte offset from the startTime of the view. There is no alignment constraint; multi-byte values may be fetched from any offset.
       * @param byteOffset The place in the buffer at which the value should be retrieved.
       */
     getInt16(byteOffset: number, littleEndian?: boolean): number;
 
     /**
-      * Gets the Uint16 value at the specified byte offset from the start of the view. There is no alignment constraint; multi-byte values may be fetched from any offset. 
+      * Gets the Uint16 value at the specified byte offset from the startTime of the view. There is no alignment constraint; multi-byte values may be fetched from any offset.
       * @param byteOffset The place in the buffer at which the value should be retrieved.
       */
     getUint16(byteOffset: number, littleEndian?: boolean): number;
 
     /**
-      * Gets the Int32 value at the specified byte offset from the start of the view. There is no alignment constraint; multi-byte values may be fetched from any offset. 
+      * Gets the Int32 value at the specified byte offset from the startTime of the view. There is no alignment constraint; multi-byte values may be fetched from any offset.
       * @param byteOffset The place in the buffer at which the value should be retrieved.
       */
     getInt32(byteOffset: number, littleEndian?: boolean): number;
 
     /**
-      * Gets the Uint32 value at the specified byte offset from the start of the view. There is no alignment constraint; multi-byte values may be fetched from any offset. 
+      * Gets the Uint32 value at the specified byte offset from the startTime of the view. There is no alignment constraint; multi-byte values may be fetched from any offset.
       * @param byteOffset The place in the buffer at which the value should be retrieved.
       */
     getUint32(byteOffset: number, littleEndian?: boolean): number;
 
     /**
-      * Gets the Float32 value at the specified byte offset from the start of the view. There is no alignment constraint; multi-byte values may be fetched from any offset. 
+      * Gets the Float32 value at the specified byte offset from the startTime of the view. There is no alignment constraint; multi-byte values may be fetched from any offset.
       * @param byteOffset The place in the buffer at which the value should be retrieved.
       */
     getFloat32(byteOffset: number, littleEndian?: boolean): number;
 
     /**
-      * Gets the Float64 value at the specified byte offset from the start of the view. There is no alignment constraint; multi-byte values may be fetched from any offset. 
+      * Gets the Float64 value at the specified byte offset from the startTime of the view. There is no alignment constraint; multi-byte values may be fetched from any offset.
       * @param byteOffset The place in the buffer at which the value should be retrieved.
       */
     getFloat64(byteOffset: number, littleEndian?: boolean): number;
 
     /**
-      * Stores an Int8 value at the specified byte offset from the start of the view. 
+      * Stores an Int8 value at the specified byte offset from the startTime of the view.
       * @param byteOffset The place in the buffer at which the value should be set.
       * @param value The value to set.
       */
     setInt8(byteOffset: number, value: number): void;
 
     /**
-      * Stores an Uint8 value at the specified byte offset from the start of the view. 
+      * Stores an Uint8 value at the specified byte offset from the startTime of the view.
       * @param byteOffset The place in the buffer at which the value should be set.
       * @param value The value to set.
       */
     setUint8(byteOffset: number, value: number): void;
 
     /**
-      * Stores an Int16 value at the specified byte offset from the start of the view. 
+      * Stores an Int16 value at the specified byte offset from the startTime of the view.
       * @param byteOffset The place in the buffer at which the value should be set.
       * @param value The value to set.
       * @param littleEndian If false or undefined, a big-endian value should be written, otherwise a little-endian value should be written.
@@ -1714,7 +1714,7 @@ interface DataView extends ArrayBufferView {
     setInt16(byteOffset: number, value: number, littleEndian?: boolean): void;
 
     /**
-      * Stores an Uint16 value at the specified byte offset from the start of the view. 
+      * Stores an Uint16 value at the specified byte offset from the startTime of the view.
       * @param byteOffset The place in the buffer at which the value should be set.
       * @param value The value to set.
       * @param littleEndian If false or undefined, a big-endian value should be written, otherwise a little-endian value should be written.
@@ -1722,7 +1722,7 @@ interface DataView extends ArrayBufferView {
     setUint16(byteOffset: number, value: number, littleEndian?: boolean): void;
 
     /**
-      * Stores an Int32 value at the specified byte offset from the start of the view. 
+      * Stores an Int32 value at the specified byte offset from the startTime of the view.
       * @param byteOffset The place in the buffer at which the value should be set.
       * @param value The value to set.
       * @param littleEndian If false or undefined, a big-endian value should be written, otherwise a little-endian value should be written.
@@ -1730,7 +1730,7 @@ interface DataView extends ArrayBufferView {
     setInt32(byteOffset: number, value: number, littleEndian?: boolean): void;
 
     /**
-      * Stores an Uint32 value at the specified byte offset from the start of the view. 
+      * Stores an Uint32 value at the specified byte offset from the startTime of the view.
       * @param byteOffset The place in the buffer at which the value should be set.
       * @param value The value to set.
       * @param littleEndian If false or undefined, a big-endian value should be written, otherwise a little-endian value should be written.
@@ -1738,7 +1738,7 @@ interface DataView extends ArrayBufferView {
     setUint32(byteOffset: number, value: number, littleEndian?: boolean): void;
 
     /**
-      * Stores an Float32 value at the specified byte offset from the start of the view. 
+      * Stores an Float32 value at the specified byte offset from the startTime of the view.
       * @param byteOffset The place in the buffer at which the value should be set.
       * @param value The value to set.
       * @param littleEndian If false or undefined, a big-endian value should be written, otherwise a little-endian value should be written.
@@ -1746,7 +1746,7 @@ interface DataView extends ArrayBufferView {
     setFloat32(byteOffset: number, value: number, littleEndian?: boolean): void;
 
     /**
-      * Stores an Float64 value at the specified byte offset from the start of the view. 
+      * Stores an Float64 value at the specified byte offset from the startTime of the view.
       * @param byteOffset The place in the buffer at which the value should be set.
       * @param value The value to set.
       * @param littleEndian If false or undefined, a big-endian value should be written, otherwise a little-endian value should be written.
@@ -2039,7 +2039,7 @@ interface HTMLTableElement extends HTMLElement, MSDataBindingTableExtensions, MS
     deleteCaption(): void;
     /**
       * Creates a new row (tr) in the table, and adds the row to the rows collection.
-      * @param index Number that specifies where to insert the row in the rows collection. The default value is -1, which appends the new row to the end of the rows collection.
+      * @param index Number that specifies where to insert the row in the rows collection. The default value is -1, which appends the new row to the endTime of the rows collection.
       */
     insertRow(index?: number): HTMLElement;
     /**
@@ -3002,7 +3002,7 @@ interface HTMLSelectElement extends HTMLElement, MSHTMLCollectionExtensions, MSD
     remove(index?: number): void;
     /**
       * Adds an element to the areas, controlRange, or options collection.
-      * @param element Variant of type Number that specifies the index position in the collection where the element is placed. If no value is given, the method places the element at the end of the collection.
+      * @param element Variant of type Number that specifies the index position in the collection where the element is placed. If no value is given, the method places the element at the endTime of the collection.
       * @param before Variant of type Object that specifies an element to insert before, or null to append the object to the collection. 
       */
     add(element: HTMLElement, before?: any): void;
@@ -5270,7 +5270,7 @@ interface Document extends Node, NodeSelector, MSEventAttachmentTarget, Document
 
     /**
       * Creates a TreeWalker object that you can use to traverse filtered lists of nodes or elements in a document.
-      * @param root The root element or node to start traversing on.
+      * @param root The root element or node to startTime traversing on.
       * @param whatToShow The type of nodes or elements to appear in the node list. For more information, see whatToShow.
       * @param filter A custom NodeFilter function to use.
       * @param entityReferenceExpansion A flag that specifies whether entity reference nodes are expanded.
@@ -5848,7 +5848,7 @@ interface Document extends Node, NodeSelector, MSEventAttachmentTarget, Document
     /**
       * Creates a style sheet for the document. 
       * @param href Specifies how to add the style sheet to the document. If a file name is specified for the URL, the style information is added as a link object. If the URL contains style information, it is added to the style object.
-      * @param index Specifies the index that indicates where the new style sheet is inserted in the styleSheets collection. The default is to insert the new style sheet at the end of the collection.
+      * @param index Specifies the index that indicates where the new style sheet is inserted in the styleSheets collection. The default is to insert the new style sheet at the endTime of the collection.
       */
     createStyleSheet(href?: string, index?: number): CSSStyleSheet;
 
@@ -5889,7 +5889,7 @@ interface Document extends Node, NodeSelector, MSEventAttachmentTarget, Document
 
     /**
       * Creates a NodeIterator object that you can use to traverse filtered lists of nodes or elements in a document. 
-      * @param root The root element or node to start traversing on.
+      * @param root The root element or node to startTime traversing on.
       * @param whatToShow The type of nodes or elements to appear in the node list
       * @param filter A custom NodeFilter function to use. For more information, see filter. Use null for no filter.
       * @param entityReferenceExpansion A flag that specifies whether entity reference nodes are expanded.
@@ -6026,7 +6026,7 @@ interface HTMLTableRowElement extends HTMLElement, HTMLTableAlignment, DOML2Depr
     deleteCell(index?: number): void;
     /**
       * Creates a new cell in the table row, and adds the cell to the cells collection.
-      * @param index Number that specifies where to insert the cell in the tr. The default value is -1, which appends the new cell to the end of the cells collection.
+      * @param index Number that specifies where to insert the cell in the tr. The default value is -1, which appends the new cell to the endTime of the cells collection.
       */
     insertCell(index?: number): HTMLElement;
 }
@@ -6961,7 +6961,7 @@ interface HTMLTableSectionElement extends HTMLElement, HTMLTableAlignment, DOML2
     moveRow(indexFrom?: number, indexTo?: number): Object;
     /**
       * Creates a new row (tr) in the table, and adds the row to the rows collection.
-      * @param index Number that specifies where to insert the row in the rows collection. The default value is -1, which appends the new row to the end of the rows collection.
+      * @param index Number that specifies where to insert the row in the rows collection. The default value is -1, which appends the new row to the endTime of the rows collection.
       */
     insertRow(index?: number): HTMLElement;
 }
@@ -7079,9 +7079,9 @@ interface HTMLInputElement extends HTMLElement, MSDataBindingExtensions {
       */
     createTextRange(): TextRange;
     /**
-      * Sets the start and end positions of a selection in a text field.
-      * @param start The offset into the text field for the start of the selection.
-      * @param end The offset into the text field for the end of the selection.
+      * Sets the startTime and endTime positions of a selection in a text field.
+      * @param start The offset into the text field for the startTime of the selection.
+      * @param end The offset into the text field for the endTime of the selection.
       */
     setSelectionRange(start: number, end: number): void;
     /**
@@ -8042,9 +8042,9 @@ interface HTMLTextAreaElement extends HTMLElement, MSDataBindingExtensions {
       */
     createTextRange(): TextRange;
     /**
-      * Sets the start and end positions of a selection in a text field.
-      * @param start The offset into the text field for the start of the selection.
-      * @param end The offset into the text field for the end of the selection.
+      * Sets the startTime and endTime positions of a selection in a text field.
+      * @param start The offset into the text field for the startTime of the selection.
+      * @param end The offset into the text field for the endTime of the selection.
       */
     setSelectionRange(start: number, end: number): void;
     /**

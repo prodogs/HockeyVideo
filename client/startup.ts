@@ -124,7 +124,7 @@ Meteor.startup(function () {
 		webix.UIManager.addHotKey("Alt+C", function () {
 	//		webix.alert("Calculating");
 		//	var obj = new Evaluator();
-			//obj.start();
+			//obj.startTime();
 		//	C4Event.emit(c4e.MetricRecalc,null);
 		});
 

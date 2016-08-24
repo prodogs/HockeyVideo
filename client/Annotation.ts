@@ -1,6 +1,43 @@
 /// <reference path="../../Video/typescript-defs/all-definitions.d.ts"/>
 
-class VEvent { } this.VEvent = VEvent;
+class VEvent {
+
+    public startTime            : number;
+    public endTime              : number;
+    public _x                : number=10;
+    public _y                : number=10;
+    public duration         : number;
+    public durationBased    : boolean = false;
+    public object           : any;
+    public label            : string;
+    public active           : boolean = false;
+    public lastCheckTime         : number;
+
+    public get x() : number {
+        return this._x;
+    }
+    public set x(value : number) {
+        this._x = value;
+    }
+    public get y() : number {
+        return this._y;
+    }
+    public set y(value : number)   {
+        this._y = value;
+    }
+
+    public action(time : number ){
+    }
+
+    public activate() {}
+    public inactivate() {}
+
+    public reset() {
+        if (this.active)
+            this.inactivate();
+    }
+
+} this.VEvent = VEvent;
 
 class Story {
 
@@ -79,16 +116,15 @@ class VideoPerspective extends Perspective { } this.VideoPespective = VideoPersp
 
 class ClipboardPerspective extends Perspective { } this.ClipboardPerspective = ClipboardPerspective;
 
-class AnnotationBlock {
+class VEventManager {
 
     public annotationList : Array<Annotation>;
-    public static theBlock : AnnotationBlock;
+    public static theBlock : VEventManager;
 
     constructor() {
         this.annotationList = new Array<Annotation>();
-        AnnotationBlock.theBlock = this;
+        VEventManager.theBlock = this;
     }
-
     public add(theAnnotation : Annotation) {
         this.annotationList.push(theAnnotation);
     }
@@ -108,41 +144,17 @@ class AnnotationBlock {
 
     }
 
-} this.AnnotationBlock = AnnotationBlock;
+} this.VEventManager = VEventManager;
 
 class VideoEvent extends VEvent { } this.VideoEvent = VideoEvent;
 
 class Annotation extends VEvent {
 
-    public start            : number;
-    public end              : number;
-    public _x                : number=10;
-    public _y                : number=10;
-    public duration         : number;
-    public durationBased    : boolean = false;
-    public object           : any;
-    public label            : string;
-    public active           : boolean = false;
-    public lastTime         : number;
-
-    public get x() : number {
-        return this._x;
-    }
-    public set x(value : number) {
-        this._x = value;
-    }
-    public get y() : number {
-        return this._y;
-    }
-    public set y(value : number)   {
-        this._y = value;
-    }
     public modified() {
         UI.Info("Annotation Modified");
         this.x = this.object.x;
         this.y = this.object.y;
     }
-
 
     public changed() {
         UI.Info("Annotation Changed ");
@@ -162,32 +174,27 @@ class Annotation extends VEvent {
         });
     }
 
-    public draw()  {
+    public activiate()  {
        FabricPlayer.canvas.add(this.object);
         this.active = true;
     }
 
-    public erase()  {
+    public inactivate()  {
         FabricPlayer.canvas.remove(this.object);
         this.active = false;
     }
 
-    public reset() {
-        if (this.active)
-            this.erase();
-    }
-
     public setTime(time : number) : boolean {
 
-        this.lastTime = time;
-        if (time > this.start && time < this.end) {
+        this.lastCheckTime = time;
+        if (time > this.startTime && time < this.endTime) {
             if (this.active)
                 return true;
-            this.draw();
+            this.activiate();
         }
         else
             if (this.active) {
-                this.erase();
+                this.inactivate();
         }
         return this.active;
     }
@@ -437,7 +444,7 @@ class FabricPlayer extends Player {
             FabricPlayer.cancelRequestAnimFrame(request);
         }
 
-        AnnotationBlock.theBlock.play(current_time);
+        VEventManager.theBlock.play(current_time);
 
         //console.log(current_time);
     }
