@@ -428,7 +428,6 @@ class FabricPlayer extends Player {
         FabricPlayer.canvas.add(this.videoObject);
     }
 
-
     public static render() {
         FabricPlayer.canvas.renderAll();
         var request = fabric.util.requestAnimFrame(FabricPlayer.render);
@@ -449,8 +448,6 @@ class FabricPlayer extends Player {
         fabric.util.requestAnimFrame(FabricPlayer.render);
     }
 
-
-
     public pause() {
 
         this.videoObject.getElement().pause();
@@ -459,6 +456,7 @@ class FabricPlayer extends Player {
         FabricPlayer.cancelRequestAnimFrame(this.request);
 
     }
+
     public drawCircle() {
 
         FabricPlayer.canvas.item(0).hasBorders = false;
@@ -473,11 +471,11 @@ class FabricPlayer extends Player {
     public getTime() : number {
         return this.currentTime();
     }
+
     public setTime(time : number) {
         if (time < 0) time = 0;
         this.videoObject.getElement().currentTime = time;
     }
-
 
     public static cancelRequestAnimFrame(request : any) {
         return window.cancelAnimationFrame ||
