@@ -1,11 +1,11 @@
 /// <reference path="../typescript-defs/all-definitions.d.ts"/>
 
 
-class FabricPlayer extends UIPlayer {
+class FabricPlayer extends Player {
 
     public static canvas : any;
     public videoElement : any;
-    public static videoPlayer : UIVideoPlayer;
+    public static videoPlayer : VideoPlayer;
     public videoObject : any;
     public request : any;7
 
@@ -18,7 +18,7 @@ class FabricPlayer extends UIPlayer {
         FabricPlayer.canvas = new fabric.Canvas(element);
     }
 
-    public setVideo(videoPlayer : UIVideoPlayer) {
+    public setVideo(videoPlayer : VideoPlayer) {
 
         FabricPlayer.videoPlayer = videoPlayer;
 

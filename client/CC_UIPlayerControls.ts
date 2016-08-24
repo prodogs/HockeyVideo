@@ -6,10 +6,10 @@ class UIPlayerControls extends UIComplexComponent {
     public playButton   : UIButton;
     public stopButton   : UIButton;
     public pauseButton  : UIButton;
-    public thePlayer    : UIPlayer;
+    public thePlayer    : Player;
     public back10Button  : UIButton;
 
-    constructor(player : UIPlayer) {
+    constructor(player : Player) {
         super(null);
         this.setID("UIPlayerController");
         this.thePlayer = player;

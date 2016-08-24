@@ -1,6 +1,22 @@
 /// <reference path="../../Video/typescript-defs/all-definitions.d.ts"/>
 
 
+
+class Perspective {
+
+} this.Perspective = Perspective;
+
+
+class VideoPerspective extends Perspective {
+
+} this.VideoPespective = VideoPerspective;
+
+class ClipboardPerspective extends Perspective {
+
+} this.ClipboardPerspective = ClipboardPerspective;
+
+
+
 class AnnotationBlock {
 
     public annotationList : Array<Annotation>;
@@ -32,12 +48,18 @@ class AnnotationBlock {
 
 } this.AnnotationBlock = AnnotationBlock;
 
-class Annotation {
+
+
+class VEvent { }
+this.VEvent = VEvent;
+
+
+class Annotation extends VEvent {
 
     public start            : number;
     public end              : number;
-    public _x                : number=0;
-    public _y                : number=0;
+    public _x                : number=10;
+    public _y                : number=10;
     public duration         : number;
     public durationBased    : boolean = false;
     public object           : any;
@@ -57,8 +79,29 @@ class Annotation {
     public set y(value : number)   {
         this._y = value;
     }
+    public modified() {
+        UI.Info("Annotation Modified");
+        this.x = this.object.x;
+        this.y = this.object.y;
+    }
+
+
+    public changed() {
+        UI.Info("Annotation Changed ");
+    }
+
     public createObject() {
         this.object["annotationData"] = this;
+       this.object.on("modified", function (e : any) {
+           var anObject =FabricPlayer.canvas.getActiveObject();
+           var annotationObject = <Annotation> (anObject["annotationData"]);
+           if (!annotationObject) {
+               UI.Info("No Annotation Object on Fabric Object");
+               return;
+           }
+           annotationObject.modified()
+
+        });
     }
 
     public draw()  {
@@ -94,11 +137,36 @@ class Annotation {
 } this.Annotation = Annotation;
 
 
+class DrawAnnotation extends Annotation {
 
-class CircleAnnotation extends Annotation {
+    public fill : string = "blue";
+    public stroke : string = "black";
+    public opacity : number = .5;
+    public strokeWidth : number = 2;
 
     constructor() {
         super();
+    }
+
+    public modified() {
+        UI.Info("DrawAnnotation Modified");
+        super.modified();
+        this.fill = this.object.fill;
+        this.stroke = this.object.stroke;
+        this.opacity = this.object.opacity;
+        this.strokeWidth = this.object.strokeWidth;
+
+
+    }
+
+} this.DrawAnnotation = DrawAnnotation;
+
+class CircleAnnotation extends DrawAnnotation {
+    public radius : number=30;
+
+    constructor() {
+        super();
+        this.label = "Circle";
     }
 
     public createObject() {
@@ -107,12 +175,96 @@ class CircleAnnotation extends Annotation {
         this.object=new fabric.Circle({
             left: 10,
             top:10,
-            radius:25,
-            stroke:'red',
-            strokeWidth:3,
-            fill:'red'
+            radius:this.radius,
+            stroke: this.stroke,
+            strokeWidth:this.strokeWidth,
+            fill: this.fill,
+            opacity : this.opacity
         });
         super.createObject();
     }
 
+    public modified() {
+        UI.Info("CircleAnnotation Modified "+this.object.radius);
+        super.modified();
+        this.radius = this.object.get("radius");
+
+    }
+
 } this.CircleAnnotation = CircleAnnotation;
+
+class RectAnnotation extends DrawAnnotation {
+
+    public height   : number=50;
+    public width    : number=50;
+
+    constructor() {
+        super();
+        this.label = "Rectangle";
+    }
+    public createObject() {
+
+        this.x = 50;
+        this.y = 50;
+
+        this.object=new fabric.Rect ({
+            left        : this.x,
+            top         : this.y,
+            height      : this.height,
+            width       : this.width,
+            stroke      : this.stroke,
+            strokeWidth : this.strokeWidth,
+            fill        : this.fill,
+            opacity     : this.opacity
+        });
+        super.createObject();
+    }
+
+    public modified() {
+        UI.Info("RectangleAnnotation Modified "+this.object.x);
+        super.modified();
+
+    }
+
+} this.RectAnnotation = RectAnnotation;
+
+class TextAnnotation extends DrawAnnotation {
+
+    constructor() {
+        super();
+        this.label = "Text";
+    }
+    public createObject() {
+
+        this.x = 80;
+        this.y = 50;
+
+        this.object=new fabric.IText ("Sample Text", {
+            left        : this.x,
+            fontSize: 30,
+            fill : "white"
+
+        });
+
+        this.object.on("changed", function (e : any) {
+            var anObject =FabricPlayer.canvas.getActiveObject();
+            var annotationObject = <Annotation> (anObject["annotationData"]);
+            annotationObject.changed()
+
+        });
+
+        super.createObject();
+    }
+
+    public changed() {
+        UI.Info("TextAnnotation Text Changed "+this.object.x);
+        super.changed();
+
+    }
+    public modified() {
+        UI.Info("TextAnnotation Modified "+this.object.x);
+        super.modified();
+
+    }
+
+} this.TextAnnotation = TextAnnotation;

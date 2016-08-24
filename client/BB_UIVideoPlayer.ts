@@ -1,7 +1,7 @@
 /// <reference path="../../Video/typescript-defs/all-definitions.d.ts"/>
 
 
-class UIPlayer {
+class Player {
 
     constructor() {}
     public play() {}
@@ -10,10 +10,9 @@ class UIPlayer {
     public getTime() : number {return 0;}
     public setTime(time : number) {}
 
-}
-this.UIPlayer = UIPlayer;
+} this.Player = Player;
 
-class UIVideoPlayer extends UIPlayer {
+class VideoPlayer extends Player {
 
     public videoJS : any = null;
     public videoID : string;
@@ -58,5 +57,4 @@ class UIVideoPlayer extends UIPlayer {
         this.videoElement.currentTime(time);
     }
 
-}
-this.UIVideoPlayer = UIVideoPlayer;
+} this.VideoPlayer = VideoPlayer;
