@@ -6,40 +6,41 @@ declare var videojs : any;
 
 Template["videoPane"].onRendered(function () {
 
-    var fabricPlayer = new FabricPlayer();
-    fabricPlayer.setCanvas("fabricCanvas");
-    var videoPlayer = new VideoPlayer("videoDiv");
-    fabricPlayer.setVideo(videoPlayer);
+    var story = new Story();
 
-    var annotationBlock = new VEventManager();
+    var videoPerspective = new VideoPerspective();
+
+    var annotationPerspective = new AnnotationPerspective();
+
+    annotationPerspective.setOverlay(videoPerspective);
 
     var circle = new CircleAnnotation();
     circle.createObject();
     circle.startTime = 1;
     circle.endTime = 15;
-
-    annotationBlock.add(circle);
-
+    circle.setPerspective(annotationPerspective);
+    story.addEvent(circle);
 
     var circle = new CircleAnnotation();
     circle.createObject();
     circle.startTime = 15;
     circle.endTime = 30;
-    annotationBlock.add(circle);
-
+    circle.setPerspective(annotationPerspective);
+    story.addEvent(circle);
 
     var rect = new RectAnnotation();
     rect.createObject();
     rect.startTime = 3;
     rect.endTime = 30;
-    annotationBlock.add(rect);
+    rect.setPerspective(annotationPerspective);
+    story.addEvent(rect);
 
     var text = new TextAnnotation();
     text.createObject();
     text.startTime = 5;
     text.endTime = 30;
-    annotationBlock.add(text);
-
+    text.setPerspective(annotationPerspective);
+    story.addEvent(text);
 
     var thePortal = new Portal();
     var portalRoot = thePortal.getRoot();
@@ -57,7 +58,7 @@ Template["videoPane"].onRendered(function () {
     newRows.addPortlet("detailArea", 15);
     newColumns.addSection(newRows);
 
-    var controls = new UIPlayerControls(fabricPlayer);
+    var controls = new UIPlayerControls(story);
 
     var dataTable = new UIDataTable();
 
@@ -77,14 +78,14 @@ Template["videoPane"].onRendered(function () {
     //dataTable.addColumn(3, {id: "endTime", header: "End", width: 150, sort: "string", editor: "text"});
 
 
-    dataTable.setList(annotationBlock.annotationList);
+    dataTable.setList(story.getEvents());
     thePortal.getPortlet("explorer").setComponent(controls);
     thePortal.getPortlet("detailArea").setComponent(dataTable);
 
     thePortal.setContainer("videoControls-container");
     thePortal.show();
 
-    fabricPlayer.play();
+    story.play();
 
 })
 

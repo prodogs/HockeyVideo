@@ -4,14 +4,15 @@ class VEvent {
 
     public startTime            : number;
     public endTime              : number;
-    public _x                : number=10;
-    public _y                : number=10;
-    public duration         : number;
-    public durationBased    : boolean = false;
-    public object           : any;
-    public label            : string;
-    public active           : boolean = false;
-    public lastCheckTime         : number;
+    public _x                   : number=10;
+    public _y                   : number=10;
+    public duration             : number;
+    public durationBased        : boolean = false;
+    public object               : any;
+    public label                : string;
+    public active               : boolean = false;
+    public lastCheckTime        : number;
+    public perspective          : Perspective;
 
     public get x() : number {
         return this._x;
@@ -32,6 +33,10 @@ class VEvent {
     public activate() {}
     public inactivate() {}
 
+    public setPerspective(perspective : Perspective) {
+        this.perspective = perspective;
+    }
+
     public reset() {
         if (this.active)
             this.inactivate();
@@ -39,15 +44,96 @@ class VEvent {
 
 } this.VEvent = VEvent;
 
-class Story {
+class Clock {
+
+    public clockPlayer : Player;
+
+    public setSyncPlayer(thePlayer : Player) {
+        this.clockPlayer = thePlayer;
+    }
+
+  public getTime() : number {
+      return this.clockPlayer.getTime();
+  }
+
+  public setTime(time : number) {
+      this.clockPlayer.setTime(time);
+
+  }
+} this.Clock = Clock;
+
+class Story extends Player {
 
     public perspectives : Array<Perspective>;
-    public events : Array<VEvent>;
-    public player : Player;
-
+    public events   : Array<VEvent>;
+    public player   : Player;
+    public request  : any;
+    public clock    : Clock;
+    public static story : Story;
 
     constructor() {
+        super();
+        this.events = new Array<VEvent>();
+        this.perspectives = new Array<Perspective>();
+        this.clock = new Clock();
+        Story.story = this;
+    }
 
+    public getEvents() : Array<VEvent> {
+        return this.events;
+    }
+    public addPerspective(perspective : Perspective) {
+        this.perspectives.push(perspective);
+    }
+    public addEvent(vEvent : VEvent) {
+        this.events.push(vEvent);
+    }
+    public play() {
+        this.player.play();
+        fabric.util.requestAnimFrame(Story.render);
+
+    }
+    public pause() {
+        for (var i=0;i<this.perspectives.length;i++) {
+            this.perspectives[i].pause();
+        }
+        Story.cancelRequestAnimFrame(this.request);
+    }
+    public restart() {}
+    public renderPerspectives() {
+        for (var i=0;i<this.perspectives.length;i++) {
+            this.perspectives[i].renderAll();
+        }
+    }
+
+    public action(time : number) {
+        for (var i=0;i<this.events.length;i++) {
+            this.events[i].action(time);
+        }
+    }
+
+    public static render() {
+        Story.story.renderPerspectives();
+
+        Story.story.request = fabric.util.requestAnimFrame(Story.render);
+        var current_time = Story.story.clock.getTime();
+        if(current_time >= 100) {
+            Story.story.pause();
+            return;
+        }
+
+        Story.story.action(current_time);
+
+        //console.log(current_time);
+    }
+
+    public static cancelRequestAnimFrame(request : any) {
+        return window.cancelAnimationFrame ||
+            window.webkitCancelRequestAnimationFrame ||
+            window.mozCancelRequestAnimationFrame ||
+            window.oCancelRequestAnimationFrame ||
+            window.msCancelRequestAnimationFrame ||
+            clearTimeout;
     }
 
 } this.Story = Story;
@@ -110,9 +196,54 @@ class VideoPlayer extends Player {
 
 } this.VideoPlayer = VideoPlayer;
 
-class Perspective { } this.Perspective = Perspective;
+class Perspective {
 
-class VideoPerspective extends Perspective { } this.VideoPespective = VideoPerspective;
+    public overlayPerspective : Perspective;
+    public targetCanvas : any;
+
+    public setOverlay(perspective : Perspective) {
+        this.overlayPerspective = perspective;
+    }
+    public getCanvas() : any {
+        return null;
+    }
+
+    public play() {}
+    public pause() {}
+    public renderAll() {
+    }
+
+} this.Perspective = Perspective;
+
+class VideoPerspective extends Perspective {
+
+    public fabricCanvas : any;
+    public canvasDiv = "fabricCanvas";
+    public videoDiv = "videoDiv";
+    public fabricPlayer : FabricPlayer;
+    public videoPlayer : VideoPlayer;
+
+    constructor() {
+        super();
+        this.fabricPlayer = new FabricPlayer();
+        this.fabricPlayer.setCanvas(this.canvasDiv);
+        var videoPlayer = new VideoPlayer(this.videoDiv);
+        this.fabricPlayer.setVideo(videoPlayer);
+    }
+
+    public play() {}
+    public pause() {}
+
+    public renderAll() {
+        this.fabricPlayer.getCanvas().renderAll();
+    }
+
+} this.VideoPespective = VideoPerspective;
+
+class AnnotationPerspective extends Perspective {
+
+
+} this.AnnotationPerspective = AnnotationPerspective;
 
 class ClipboardPerspective extends Perspective { } this.ClipboardPerspective = ClipboardPerspective;
 
@@ -125,6 +256,7 @@ class VEventManager {
         this.annotationList = new Array<Annotation>();
         VEventManager.theBlock = this;
     }
+
     public add(theAnnotation : Annotation) {
         this.annotationList.push(theAnnotation);
     }
@@ -407,7 +539,8 @@ class UIPlayerControls extends UIComplexComponent {
 
 class FabricPlayer extends Player {
 
-    public static canvas : any;
+    public canvas : any;
+    public playerCanvas : any;
     public videoElement : any;
     public static videoPlayer : VideoPlayer;
     public videoObject : any;
@@ -420,6 +553,7 @@ class FabricPlayer extends Player {
     public setCanvas(element : string) {
 
         FabricPlayer.canvas = new fabric.Canvas(element);
+        this.playerCanvas = FabricPlayer.canvas;
     }
 
     public setVideo(videoPlayer : VideoPlayer) {
@@ -435,39 +569,17 @@ class FabricPlayer extends Player {
         FabricPlayer.canvas.add(this.videoObject);
     }
 
-    public static render() {
-        FabricPlayer.canvas.renderAll();
-        var request = fabric.util.requestAnimFrame(FabricPlayer.render);
-        var current_time = FabricPlayer.videoPlayer.currentTime();
-        if(current_time >= 100) {
-            FabricPlayer.videoPlayer.pause();
-            FabricPlayer.cancelRequestAnimFrame(request);
-        }
-
-        VEventManager.theBlock.play(current_time);
-
-        //console.log(current_time);
-    }
-
     public play() {
         this.videoObject.getElement().play();
         FabricPlayer.videoPlayer.play();
-        fabric.util.requestAnimFrame(FabricPlayer.render);
     }
 
+    public getCanvas() : any {
+        return this.canvas;
+    }
     public pause() {
-
         this.videoObject.getElement().pause();
         FabricPlayer.videoPlayer.pause();
-
-        FabricPlayer.cancelRequestAnimFrame(this.request);
-
-    }
-
-    public drawCircle() {
-
-        FabricPlayer.canvas.item(0).hasBorders = false;
-        FabricPlayer.canvas.setActiveObject(FabricPlayer.canvas.item(0));
     }
 
     public currentTime() : number {
@@ -484,13 +596,5 @@ class FabricPlayer extends Player {
         this.videoObject.getElement().currentTime = time;
     }
 
-    public static cancelRequestAnimFrame(request : any) {
-        return window.cancelAnimationFrame ||
-            window.webkitCancelRequestAnimationFrame ||
-            window.mozCancelRequestAnimationFrame ||
-            window.oCancelRequestAnimationFrame ||
-            window.msCancelRequestAnimationFrame ||
-            clearTimeout;
-    }
 
 }  this.FabricPlayer = FabricPlayer;
