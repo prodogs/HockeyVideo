@@ -198,13 +198,16 @@ class VideoPlayer extends Player {
 
 class Perspective {
 
-    public overlayPerspective : Perspective;
-    public targetCanvas : any;
+    public overlayPerspective : Perspective = null;
 
     public setOverlay(perspective : Perspective) {
         this.overlayPerspective = perspective;
     }
+
     public getCanvas() : any {
+        if (this.overlayPerspective != null) {
+            return this.overlayPerspective.getCanvas();
+        }
         return null;
     }
 
@@ -235,6 +238,9 @@ class VideoPerspective extends Perspective {
         this.fabricPlayer.play();
     }
 
+    public getCanvas() : any {
+        return this.fabricPlayer.canvas;
+    }
     public pause() {
         this.fabricPlayer.pause();
     }
@@ -283,7 +289,15 @@ class VEventManager {
 
 } this.VEventManager = VEventManager;
 
-class VideoEvent extends VEvent { } this.VideoEvent = VideoEvent;
+class VideoEvent extends VEvent {
+
+    public perspective : Perspective;
+
+    public setPerspective (perspective : Perspective) {
+        this.perspective = perspective;
+    }
+
+} this.VideoEvent = VideoEvent;
 
 class Annotation extends VEvent {
 
@@ -300,7 +314,7 @@ class Annotation extends VEvent {
     public createObject() {
         this.object["annotationData"] = this;
        this.object.on("modified", function (e : any) {
-           var anObject =FabricPlayer.canvas.getActiveObject();
+           var anObject =this.perspective.canvas.getActiveObject();
            var annotationObject = <Annotation> (anObject["annotationData"]);
            if (!annotationObject) {
                UI.Info("No Annotation Object on Fabric Object");
@@ -312,12 +326,12 @@ class Annotation extends VEvent {
     }
 
     public activiate()  {
-       FabricPlayer.canvas.add(this.object);
+        this.perspective.getCanvas().add(this.object);
         this.active = true;
     }
 
     public inactivate()  {
-        FabricPlayer.canvas.remove(this.object);
+        this.perspective.getCanvas().remove(this.object);
         this.active = false;
     }
 
@@ -448,7 +462,7 @@ class TextAnnotation extends DrawAnnotation {
         });
 
         this.object.on("changed", function (e : any) {
-            var anObject =FabricPlayer.canvas.getActiveObject();
+            var anObject =this.perspective.canvas.getActiveObject();
             var annotationObject = <Annotation> (anObject["annotationData"]);
             annotationObject.changed()
 
@@ -557,8 +571,7 @@ class FabricPlayer extends Player {
 
     public setCanvas(element : string) {
 
-        FabricPlayer.canvas = new fabric.Canvas(element);
-        this.playerCanvas = FabricPlayer.canvas;
+        this.playerCanvas = new fabric.Canvas(element);
     }
 
     public setVideo(videoPlayer : VideoPlayer) {
@@ -571,7 +584,7 @@ class FabricPlayer extends Player {
         this.videoObject = new fabric.Image(videoEL);
 
         this.videoElement = FabricPlayer.videoPlayer.videoElement;
-        FabricPlayer.canvas.add(this.videoObject);
+        this.playerCanvas.add(this.videoObject);
     }
 
     public play() {

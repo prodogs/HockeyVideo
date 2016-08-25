@@ -11,7 +11,6 @@ Template["videoPane"].onRendered(function () {
     var videoPerspective = new VideoPerspective();
 
     var annotationPerspective = new AnnotationPerspective();
-
     annotationPerspective.setOverlay(videoPerspective);
 
     var circle = new CircleAnnotation();
@@ -21,7 +20,7 @@ Template["videoPane"].onRendered(function () {
     circle.setPerspective(annotationPerspective);
     story.addEvent(circle);
 
-    var circle = new CircleAnnotation();
+    circle = new CircleAnnotation();
     circle.createObject();
     circle.startTime = 15;
     circle.endTime = 30;
@@ -77,7 +76,6 @@ Template["videoPane"].onRendered(function () {
     //dataTable.addColumn(2, {id: "startTime", header: "Start", width: 150, sort: "string", editor: "text"});
     //dataTable.addColumn(3, {id: "endTime", header: "End", width: 150, sort: "string", editor: "text"});
 
-
     dataTable.setList(story.getEvents());
     thePortal.getPortlet("explorer").setComponent(controls);
     thePortal.getPortlet("detailArea").setComponent(dataTable);
@@ -85,6 +83,7 @@ Template["videoPane"].onRendered(function () {
     thePortal.setContainer("videoControls-container");
     thePortal.show();
 
+    story.clock.setSyncPlayer(videoPerspective.fabricPlayer);
     story.play();
 
 })
