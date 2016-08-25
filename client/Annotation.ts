@@ -227,12 +227,17 @@ class VideoPerspective extends Perspective {
         super();
         this.fabricPlayer = new FabricPlayer();
         this.fabricPlayer.setCanvas(this.canvasDiv);
-        var videoPlayer = new VideoPlayer(this.videoDiv);
-        this.fabricPlayer.setVideo(videoPlayer);
+        this.videoPlayer = new VideoPlayer(this.videoDiv);
+        this.fabricPlayer.setVideo(this.videoPlayer);
     }
 
-    public play() {}
-    public pause() {}
+    public play() {
+        this.fabricPlayer.play();
+    }
+
+    public pause() {
+        this.fabricPlayer.pause();
+    }
 
     public renderAll() {
         this.fabricPlayer.getCanvas().renderAll();
