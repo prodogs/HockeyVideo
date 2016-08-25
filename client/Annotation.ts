@@ -99,7 +99,11 @@ class Story extends Player {
         }
         Story.cancelRequestAnimFrame(this.request);
     }
-    public restart() {}
+    public restart() {
+        for (var i=0;i<this.events.length;i++) {
+            this.events[i].reset();
+        }
+    }
     public renderPerspectives() {
         for (var i=0;i<this.perspectives.length;i++) {
             this.perspectives[i].renderAll();
@@ -241,6 +245,7 @@ class VideoPerspective extends Perspective {
     public getCanvas() : any {
         return this.fabricPlayer.canvas;
     }
+
     public pause() {
         this.fabricPlayer.pause();
     }
@@ -253,41 +258,9 @@ class VideoPerspective extends Perspective {
 
 class AnnotationPerspective extends Perspective {
 
-
 } this.AnnotationPerspective = AnnotationPerspective;
 
 class ClipboardPerspective extends Perspective { } this.ClipboardPerspective = ClipboardPerspective;
-
-class VEventManager {
-
-    public annotationList : Array<Annotation>;
-    public static theBlock : VEventManager;
-
-    constructor() {
-        this.annotationList = new Array<Annotation>();
-        VEventManager.theBlock = this;
-    }
-
-    public add(theAnnotation : Annotation) {
-        this.annotationList.push(theAnnotation);
-    }
-
-    public remove(theAnnotation : Annotation) {    }
-
-    public play(theTime : any) {
-        for (var i=0;i<this.annotationList.length;i++) {
-            this.annotationList[i].setTime(theTime);
-        }
-    }
-
-    public reset() {
-        for (var i=0;i<this.annotationList.length;i++) {
-            this.annotationList[i].reset();
-        }
-
-    }
-
-} this.VEventManager = VEventManager;
 
 class VideoEvent extends VEvent {
 
