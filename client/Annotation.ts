@@ -1,5 +1,7 @@
 /// <reference path="../../Video/typescript-defs/all-definitions.d.ts"/>
 
+console.log("Loading Annotation.TS.....");
+
 class VEvent {
 
     public startTime            : number;
@@ -76,7 +78,7 @@ class Story extends Player {
         this.events = new Array<VEvent>();
         this.perspectives = new Array<Perspective>();
         this.clock = new Clock();
-        Story.story = this;
+       // Story.story = this;
     }
 
     public getEvents() : Array<VEvent> {
