@@ -1666,7 +1666,11 @@ class UIDataTable extends UIComponent {
 		if (this._showToolBar)	this.toolBar.initialize();
 		this.defineEvents();
 	}
-
+	public refresh() {
+		if ($$(this.dataTableID)) {
+			$$(this.dataTableID).refresh();
+		}
+	}
 	public getTableList() : Array<any> {
 		var datatable = $$(this.dataTableID)
 		var dataList = new Array<any>();

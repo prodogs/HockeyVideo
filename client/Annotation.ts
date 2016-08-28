@@ -25,28 +25,107 @@ class VEvent {
     public endTime              : number;
     public duration             : number;
     public timerType            : TimerType = TimerType.StartEnd;
-    public _x                   : number=10;
-    public _y                   : number=10;
+    protected x                 : number=10;
+    protected y                 : number=10;
     public durationBased        : boolean = false;
-    public object               : any;
+    public object               : fabric.IObject = null;
     public label                : string;
     public isActive             : boolean = false;
     public lastCheckTime        : number =0;
     public perspective          : Perspective;
     public currentCheckTime     : number=0;
 
-    public get x() : number {
-        return this._x;
+    public get left() : number {
+        if (this.object) {
+            return this.object.get("left");
+        }
     }
-    public set x(value : number) {
-        this._x = value;
+    public set left(value : number) {
+        if (this.object) {
+            this.object.set("left",value);
+        }
     }
-    public get y() : number {
-        return this._y;
+    public get top() : number {
+        if (this.object)
+            return this.object.get("top");
     }
-    public set y(value : number)   {
-        this._y = value;
+    public set top(value : number)   {
+        if (this.object)
+            this.object.set("top",value);
     }
+    public get active() {
+        if (this.object)
+            return this.object.get("active");
+    }
+
+    public get fill() : string {
+        if (this.object)
+            return this.object.get("fill");
+    }
+    public set fill(value : string) {
+        if (this.object)
+            this.object.set("fill",value);
+    }
+    public get height() : number {
+        if (this.object)
+            return this.object.get("height");
+    }
+    public get width() : number {
+        if (this.object)
+            return this.object.get("width");
+    }
+    public set width(value : number) {
+        if (this.object)
+            this.object.set("width",value);
+    }
+    public set height(value : number) {
+        if (this.object)
+            this.object.set("height",value);
+    }
+    public get isMoving() : boolean  {
+        if (this.object)
+            return this.object.get("isMoving");
+    }
+    public get opacity() : number {
+        if (this.object)
+            return this.object.get("opacity");
+    }
+    public set opacity(value : number) {
+        if (this.object)
+            this.object.set("opacity",value);
+    }
+    public get scaleX() : number {
+        if (this.object)
+            return this.object.get("scaleX");
+    }
+    public set scaleX(value : number) {
+        if (this.object)
+            this.object.set("scaleX",value);
+    }
+    public get scaleY() : number{
+        if (this.object)
+            return this.object.get("scaleY");
+    }
+    public set scaleY(value : number) {
+        if (this.object)
+            this.object.set("scaleY",value);
+    }
+    public get stroke() : string {
+        if (this.object) return this.object.get("stroke");
+    }
+    public set stroke(value : string) {
+        if (this.object) this.object.set("stroke", value);
+    }
+    public get strokeWidth() {
+        if (this.object) return this.object.get("strokeWidth");
+    }
+    public set strokeWidth(value : number)  {
+        if (this.object) this.object.set("strokeWidth",value);
+    }
+    public get originalState() : any {
+        if (this.object) return this.object.get("originalState");
+    }
+
 
     public action(time : number ) {
 
@@ -114,7 +193,6 @@ class VEvent {
     }
 
 } this.VEvent = VEvent;
-console.log("VEvent Defined");
 
 class Clock {
 
@@ -235,8 +313,6 @@ class Story implements Player {
     }
 
 } this.Story = Story;
-
-console.log("Story Defined");
 
 class VideoPlayer implements Player {
 
@@ -360,36 +436,34 @@ class Annotation extends VEvent {
 
     public modified() {
         UI.Info("Annotation Modified");
-        this.x = this.object.x;
-        this.y = this.object.y;
+        MyApp.C4Event.emit("AnnotationChanged",null);
+
     }
     public changed() {
         UI.Info("Annotation Changed ");
     }
     public createObject() {
-        this.object["annotationData"] = this;
+       this.object["annotationData"] = this;
        this.object.on("modified", function (e : any) {
-           var annotationObject = this.annotationData;
+           var annotationObject = <Annotation> this.annotationData;
            var anObject = this;
-
            if (!annotationObject) {
                UI.Info("No Annotation Object on Fabric Object");
                return;
            }
+           annotationObject.object = anObject;
            annotationObject.modified()
-
         });
     }
-
 
 } this.Annotation = Annotation;
 
 class DrawAnnotation extends Annotation {
 
-    public fill : string = "blue";
-    public stroke : string = "black";
-    public opacity : number = .5;
-    public strokeWidth : number = 2;
+    public defaultFill         : string = "blue";
+    public defaultStroke       : string = "black";
+    public defaultOpacity      : number = .5;
+    public defaultStrokeWidth  : number = 2;
 
     constructor() {
         super();
@@ -411,52 +485,52 @@ class DrawAnnotation extends Annotation {
         this.stroke = this.object.stroke;
         this.opacity = this.object.opacity;
         this.strokeWidth = this.object.strokeWidth;
-
-
     }
+
+
 
 } this.DrawAnnotation = DrawAnnotation;
 
 class CircleAnnotation extends DrawAnnotation {
-    public radius : number=30;
+    public defaultRadius : number=30;
 
     constructor() {
         super();
         this.label = "Circle";
+        this.createObject();
     }
 
     public createObject() {
         this.x = 10;
         this.y = 10;
-        this.object=new fabric.Circle({
-            left: 10,
-            top:10,
-            radius:this.radius,
-            stroke: this.stroke,
-            strokeWidth:this.strokeWidth,
-            fill: this.fill,
-            opacity : this.opacity
+        this.object = new fabric.Circle({
+            left        : 10,
+            top         : 10,
+            radius      : this.defaultRadius,
+            stroke      : this.defaultStroke,
+            strokeWidth : this.defaultStrokeWidth,
+            fill        : this.defaultFill,
+            opacity     : this.defaultOpacity
         });
+
         super.createObject();
     }
     public modified() {
-        UI.Info("CircleAnnotation Modified "+this.object.radius);
+        UI.Info("CircleAnnotation Modified "+this.object.get("radius"));
         super.modified();
-        this.radius = this.object.get("radius");
-
     }
-
 
 } this.CircleAnnotation = CircleAnnotation;
 
 class RectAnnotation extends DrawAnnotation {
 
-    public height   : number=50;
-    public width    : number=50;
+    public defaultHeight   : number=50;
+    public defaultWidth    : number=50;
 
     constructor() {
         super();
         this.label = "Rectangle";
+        this.createObject();
     }
 
     public createObject() {
@@ -467,17 +541,17 @@ class RectAnnotation extends DrawAnnotation {
         this.object=new fabric.Rect ({
             left        : this.x,
             top         : this.y,
-            height      : this.height,
-            width       : this.width,
-            stroke      : this.stroke,
-            strokeWidth : this.strokeWidth,
-            fill        : this.fill,
-            opacity     : this.opacity
+            height      : this.defaultHeight,
+            width       : this.defaultWidth,
+            stroke      : this.defaultStroke,
+            strokeWidth : this.defaultStrokeWidth,
+            fill        : this.defaultFill,
+            opacity     : this.defaultOpacity
         });
         super.createObject();
     }
     public modified() {
-        UI.Info("RectangleAnnotation Modified "+this.object.x);
+        UI.Info("RectangleAnnotation Modified "+this.object.getLeft());
         super.modified();
 
     }
@@ -489,6 +563,7 @@ class TextAnnotation extends DrawAnnotation {
     constructor() {
         super();
         this.label = "Text";
+        this.createObject();
     }
 
     public createObject() {
@@ -513,12 +588,12 @@ class TextAnnotation extends DrawAnnotation {
         super.createObject();
     }
     public changed() {
-        UI.Info("TextAnnotation Text Changed "+this.object.x);
+        UI.Info("TextAnnotation Text Changed "+this.object.getLeft());
         super.changed();
 
     }
     public modified() {
-        UI.Info("TextAnnotation Modified "+this.object.x);
+        UI.Info("TextAnnotation Modified "+this.object.getLeft());
         super.modified();
 
     }
@@ -732,3 +807,45 @@ class FabricPlayer implements Player {
     }
 
 }  this.FabricPlayer = FabricPlayer;
+
+class UIAnnotationTable extends UIDataTable {
+
+    public static TheTable = null;
+    constructor (parameters = null) {
+        super(parameters);
+        UIAnnotationTable.TheTable = this;
+    }
+
+    public static Modified() {
+        UI.Info("Event Caught");
+        UIAnnotationTable.TheTable.refresh();
+
+    }
+    public getView() : any {
+
+        this.uiClassType = null;
+
+        this.setEditable(true);
+        var index=0;
+        this.addColumn(index++, {id: "label", header: "Name", width: 100, sort: "string", editor: "text"});
+        this.addColumn(index++, {id: "startTime", header: "Start", width: 100, sort: "string", editor: "text"});
+        this.addColumn(index++, {id: "endTime", header: "End", width: 100, sort: "string", editor: "text"});
+        this.addColumn(index++, {id: "left", header: "Left", width: 100, sort: "string", editor: "text"});
+        this.addColumn(index++, {id: "top", header: "Top", width: 100, sort: "string", editor: "text"});
+        this.addColumn(index++, {id: "height", header: "Height", width: 100, sort: "string", editor: "text"});
+        this.addColumn(index++, {id: "width", header: "Width", width: 100, sort: "string", editor: "text"});
+        this.addColumn(index++, {id: "scaleX", header: "ScaleX", width: 100, sort: "string", editor: "text"});
+        this.addColumn(index++, {id: "scaleY", header: "ScaleY", width: 100, sort: "string", editor: "text"});
+
+
+        this.defineEvents();
+        return super.getView();
+    }
+
+    public defineEvents() {
+        super.defineEvents();
+
+        MyApp.C4Event.on("AnnotationChanged",UIAnnotationTable.Modified);
+    }
+
+} this.UIAnnotationTable = UIAnnotationTable;

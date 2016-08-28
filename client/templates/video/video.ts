@@ -17,28 +17,24 @@ Template["videoPane"].onRendered(function () {
 
 
     var circle = new CircleAnnotation();
-    circle.createObject();
     circle.startTime = 1;
     circle.endTime = 15;
     circle.setPerspective(annotationPerspective);
     story.addEvent(circle);
 
     circle = new CircleAnnotation();
-    circle.createObject();
     circle.startTime = 15;
     circle.endTime = 30;
     circle.setPerspective(annotationPerspective);
     story.addEvent(circle);
 
     var rect = new RectAnnotation();
-    rect.createObject();
     rect.startTime = 3;
     rect.endTime = 30;
     rect.setPerspective(annotationPerspective);
     story.addEvent(rect);
 
     var text = new TextAnnotation();
-    text.createObject();
     text.startTime = 5;
     text.endTime = 30;
     text.setPerspective(annotationPerspective);
@@ -72,24 +68,11 @@ Template["videoPane"].onRendered(function () {
 
     var controls = new UIPlayerControls(story);
 
-    var dataTable = new UIDataTable();
+    var annotationTable = new UIAnnotationTable();
+
+    var dataTable = new UIAnnotationTable();
 
     dataTable.uiClassType = null;
-
-    dataTable.setEditable(true);
-    var index=0;
-    dataTable.addColumn(index++, {id: "label", header: "Name", width: 100, sort: "string", editor: "text"});
-    dataTable.addColumn(index++, {id: "startTime", header: "Start", width: 100, sort: "string", editor: "text"});
-    dataTable.addColumn(index++, {id: "endTime", header: "End", width: 100, sort: "string", editor: "text"});
-    dataTable.addColumn(index++, {id: "radius", header: "Radius", width: 100, sort: "string", editor: "text"});
-    dataTable.addColumn(index++, {id: "y", header: "x", width: 100, sort: "string", editor: "text"});
-    dataTable.addColumn(index++, {id: "x", header: "y", width: 100, sort: "string", editor: "text"});
-
-    //dataTable.addColumn(1, {id: "label", header: "Name", width: 150, sort: "string", editor: "text"});
-    //dataTable.addColumn(2, {id: "startTime", header: "Start", width: 150, sort: "string", editor: "text"});
-    //dataTable.addColumn(3, {id: "endTime", header: "End", width: 150, sort: "string", editor: "text"});
-
-
 
     var clockField = new UIStoryClock();
 

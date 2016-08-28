@@ -528,7 +528,6 @@ class BaseClass extends C4Object {
 } this.BaseClass = BaseClass;
 Factory.AddStringToClass("BaseClass", BaseClass);
 
-
 class Subject extends BaseClass {
 
 	public name : string;
@@ -1254,4 +1253,3 @@ class FolderBase extends TreeBase {
 
 } this.FolderBase = FolderBase;
 Factory.AddStringToClass("FolderBase", FolderBase);
-
