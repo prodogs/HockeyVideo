@@ -1,7 +1,5 @@
-/// <reference path="../typescript-defs/all-definitions.d.ts"/>
-
-
 console.log("Loading MetaData.ts....");
+
 class RelationshipKey {
 
 	public static SUBJECT_TREE            = "SUBJECT_TREE";
@@ -9,9 +7,9 @@ class RelationshipKey {
 this.RelationshipKey = RelationshipKey;
 
 class ClassType {
-	public static MAP:string            	= "map"
+	public static MAP:string            	= "map";
 	public static COUNTER:string            = "counter";
-
+	public static TIME_MACHINE : string		= "time_machine";
 }
 this.ClassType = ClassType;
 enum ClassStructureTypes { Basic = 0, Tree = 1 }

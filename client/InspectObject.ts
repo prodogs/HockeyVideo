@@ -1,5 +1,7 @@
-/// <reference path="../../Video/typescript-defs/all-definitions.d.ts"/>
-
+interface JSON {
+    decycle(object : any)
+    retrocycle($ : any)
+}
     class InspectObject extends UIComplexComponent {
 
         public inspectionObject:any;

@@ -1,4 +1,3 @@
-/// <reference path="../../Video/typescript-defs/all-definitions.d.ts"/>
 declare var toastr:any;
 declare var C4four:any;
 declare var findClassType:any;
@@ -868,7 +867,8 @@ class UISliderField extends UIField {
 		this.setID("UISliderField");
 	}
 
-	public setComponent(label:string, value:any, data:any, callback:any, updateField = null, minValue:number = 0, maxValue:number = 1, step:number = .1) {
+	public setComponent(label:string,
+				value:any, data:any, callback:any, updateField = null, minValue:number = 0, maxValue:number = 1, step:number = .1) {
 		this.setLabel(label);
 		this.setValue(value);
 		this.setData(data);
@@ -886,7 +886,7 @@ class UISliderField extends UIField {
 			label: this.getLabel(),
 			value: this.getValue(),
 			title: function (obj) {
-				return webix.i18n.numberFormat(obj.value * 100) + "%";
+				return webix.i18n.numberFormat(obj.value);
 			}
 		});
 		return this.componentView;
@@ -1789,14 +1789,16 @@ class PortalSection extends UIComponent {
 
 	//region Instance Variables
 	public portalSectionIndex         = null;
-	public classType:ClassType;
-	public theArray:Array<any>;
-	public gravity:number             = 1;
+	public classType				: ClassType;
+	public theArray					: Array<any>;
+	public gravity					: number = 1;
 	public portletName                = "";
-	public sectionHeader:PortalHeader = null;
+	public sectionHeader			: PortalHeader = null;
 	private template                  = {type: "line"};
 	private _scrollBarX               = false;
 	private _scrollBarY               = false;
+	public height : number = null;
+	public width  : number = null;
 	//endregion
 	//region Class Variables
 	public static COLUMNS = "cols";
@@ -1875,6 +1877,12 @@ class PortalSection extends UIComponent {
 		} else if (this.scrollBarX)
 			this.template["scrollx"] = true; else if (this.scrollBarY)
 			this.template["scrolly"] = true;
+
+		if (this.width != null || this.height != null) {
+			this.template["height"] = this.height;
+			this.template["width"] = this.width;
+		}
+
 		return this.template;
 	}
 	public defineEvents() {

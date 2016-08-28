@@ -1,4 +1,4 @@
-/// <reference path="../../Video/typescript-defs/all-definitions.d.ts"/>
+
 class LogWindow extends UIComplexComponent {
 	public popup:UIPopupWindow;
 

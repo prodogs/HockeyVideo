@@ -1,8 +1,3 @@
-/// <reference path="../../Video/typescript-defs/all-definitions.d.ts"/>
-/// <reference path="../../Video/typescript-defs/typescript.d.ts"/>
-/// <reference path="../../Video/typescript-defs/webix.d.ts"/>
-/// <reference path="../../Video/both/C4log.ts"/>
-
 declare var ImportLog:Mongo.Collection<any>
 
 class ImportLogClass {

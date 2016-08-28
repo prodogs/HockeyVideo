@@ -1,5 +1,3 @@
-/// <reference path="../../Video/typescript-defs/all-definitions.d.ts"/>
-/// <reference path="../../Video/both/ConsistencyChecker.ts"/>
 
     class UIConsistencyChecker extends UIComplexComponent {
 

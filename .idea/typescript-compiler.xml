@@ -3,7 +3,8 @@
   <component name="TypeScriptCompiler">
     <option name="isCompilerEnabled" value="true" />
     <option name="nodeInterpreterTextField" value="/usr/bin/node" />
-    <option name="useConfig" value="true" />
+    <option name="hasOutDirectory" value="true" />
+    <option name="outDirectory" value="$PROJECT_DIR$/../Trash" />
     <option name="useService" value="true" />
   </component>
 </project>

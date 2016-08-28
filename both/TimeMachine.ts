@@ -1,7 +1,3 @@
-/// <reference path="../typescript-defs/all-definitions.d.ts"/>
-
-
-
 console.log("Loading TimeMachine.ts ...");
 
 //region Global Variable Declarations
@@ -96,10 +92,11 @@ class TimeMachineClass {
         }
     }
     public restoreServer(id:string) {
+        /*
         AppLog.info("TimeMachine RestoreAll Called with ID = " + id);
         this.checkPointServer("Checkpoint B4 restore ");
         this.CleanDB();
-       // var timeMachineProxy = Factory.CreateProxyInstance(ClassType.TIME_MACHINE);
+       var timeMachineProxy = Factory.CreateProxyInstance(ClassType.TIME_MACHINE);
         AppLog.info("Time Machine Getting Capsule to restore");
         try {
             this.capsule = timeMachineProxy.getOne(id);
@@ -116,6 +113,7 @@ class TimeMachineClass {
         for (var i:number = 0; i < this.capsuleArray.length; i++) {
             this.popCollection(this.capsuleArray[i])
         }
+        */
     }
     public popCollection(theRecord:any) {
         var objectProxy = Factory.CreateProxyInstance(theRecord.classType);
@@ -145,4 +143,5 @@ class TimeMachineClass {
             }
         }
     }
+
 }this.TimeMachineClass = TimeMachineClass;

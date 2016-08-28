@@ -1,4 +1,3 @@
-/// <reference path="../../Video/typescript-defs/all-definitions.d.ts"/>
 9
 console.log("globalVariables.ts is loading");
 

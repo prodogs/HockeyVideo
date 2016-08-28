@@ -1,14 +1,11 @@
-/// <reference path="../../Video/typescript-defs/all-definitions.d.ts"/>
-/// <reference path="C4Events.ts"/>
-/// <reference path="LogWindow.ts"/>
 
 console.log("client/startup.ts loading ...")
 declare var Reveal:any;
 declare var MyApp:any;
+
 MyApp = new C4Object();
 
 Meteor.startup(function () {
-
 
 	console.log("Client Lib Startup Running");
 	console.log("Initializing Factory");
@@ -16,24 +13,16 @@ Meteor.startup(function () {
 	Factory.Initialize();
 
 	console.log("Completed Initializing Factory");
-	
-	this.C4Event = new C4EventClass();
 
-/*	Template["navItems"].helpers({
-		                             activeIfTemplateIs: function (template) {
-			                             var currentRoute = Router.current();
-			                             return currentRoute && template === currentRoute.lookupTemplate() ? 'active' : '';
-		                             }
-	                             });
-*/
-/*
+	MyApp.C4Event = new C4EventClass();
+
 	setTimeout(function(){
 		MyApp.ObjectRouter = new ObjectUpdateRouter();
 		console.log("Running Object Observation Initalization");
 		MyApp.ObjectRouter.startObservations();
 		console.log("Complete Object Observation Initialization")
 	}, 15000);
-*/
+
 	webix.ready(function () {
 		console.log("webix ready event"); // never run
 		webix.CustomScroll.init();

@@ -1,4 +1,3 @@
-/// <reference path="../../Video/typescript-defs/all-definitions.d.ts"/>
 
 
     declare var MyApp : any;

@@ -1,6 +1,3 @@
-/// <reference path="../typescript-defs/all-definitions.d.ts"/>
-/// <reference path="./SystemHealth.ts"/>
-
 
 /*
  table structure

@@ -1,4 +1,3 @@
-/// <reference path="../typescript-defs/all-definitions.d.ts"/>
 declare var UploadServer:any;
 console.log("Server startup is loading");
 Meteor.startup(function () {

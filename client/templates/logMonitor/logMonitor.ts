@@ -1,7 +1,5 @@
-/// <reference path="../../../typescript-defs/all-definitions.d.ts"/>
 
-/// <reference path="../../../both/C4log.ts"/>
-
+declare var C4log;
 declare var C4logDB:Mongo.Collection<any>;
 
 Template["logMonitor"].onRendered(function () {

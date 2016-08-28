@@ -1,5 +1,4 @@
-/// <reference path="../../../typescript-defs/all-definitions.d.ts"/>
-/// <reference path="../../../both/C4log.ts"/>
+
 
 declare var C4logDB:Mongo.Collection<any>;
 declare var videojs : any;
@@ -10,8 +9,12 @@ Template["videoPane"].onRendered(function () {
 
     var videoPerspective = new VideoPerspective();
 
+    story.addPerspective(videoPerspective);
+
     var annotationPerspective = new AnnotationPerspective();
     annotationPerspective.setOverlay(videoPerspective);
+    story.addPerspective(annotationPerspective);
+
 
     var circle = new CircleAnnotation();
     circle.createObject();
@@ -49,13 +52,23 @@ Template["videoPane"].onRendered(function () {
     newColumns.scrollBarY = true;
     var col1Rows          = thePortal.createRows("column1Rows");
     newColumns.addSection(col1Rows);
-    col1Rows.addHeader("Explorer");
-    col1Rows.addPortlet("explorer", 1);
+    col1Rows.addHeader("Controls");
+    col1Rows.addPortlet("controls", 50);
+    col1Rows.width = 100;
+    col1Rows.height = 300;
     newColumns.addResizer();
+
     var newRows = thePortal.createRows("column2Rows");
-    newRows.addHeader("Detail");
-    newRows.addPortlet("detailArea", 15);
+    newRows.addHeader("Events");
+    newRows.addPortlet("events", 115);
+    newRows.width = 800;
+    newRows.height = 300;
     newColumns.addSection(newRows);
+
+    var clockRow = thePortal.createRows("clockRow");
+    clockRow.addHeader("Clock");
+    clockRow.addPortlet("ClockRow" , 115);
+    newRows.addSection(clockRow);
 
     var controls = new UIPlayerControls(story);
 
@@ -76,9 +89,14 @@ Template["videoPane"].onRendered(function () {
     //dataTable.addColumn(2, {id: "startTime", header: "Start", width: 150, sort: "string", editor: "text"});
     //dataTable.addColumn(3, {id: "endTime", header: "End", width: 150, sort: "string", editor: "text"});
 
+
+
+    var clockField = new UIStoryClock();
+
     dataTable.setList(story.getEvents());
-    thePortal.getPortlet("explorer").setComponent(controls);
-    thePortal.getPortlet("detailArea").setComponent(dataTable);
+    thePortal.getPortlet("controls").setComponent(controls);
+    thePortal.getPortlet("events").setComponent(dataTable);
+    thePortal.getPortlet("ClockRow").setComponent(clockField);
 
     thePortal.setContainer("videoControls-container");
     thePortal.show();

@@ -1,11 +1,8 @@
-/// <reference path="../typescript-defs/all-definitions.d.ts"/>
-
 declare var RelationshipStore:Mongo.Collection<any>
 declare var MetaDataStore:Mongo.Collection<any>
 declare var CounterStore:Mongo.Collection<any>
 declare var MapStore:Mongo.Collection<any>
 
-//endregion
 console.log("Loading AA_BasicClass.ts ...");
 
 class C4Object extends Object {

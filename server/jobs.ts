@@ -1,5 +1,3 @@
-/// <reference path="../typescript-defs/all-definitions.d.ts"/>
-/// <reference path="../both/ConsistencyChecker.ts"/>
 
 declare var SyncedCron:any;
 Meteor.startup(function () {

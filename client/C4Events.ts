@@ -1,4 +1,3 @@
-/// <reference path="../../Video/typescript-defs/all-definitions.d.ts"/>
 
 declare var C4Event:any;
 declare var EventEmitter:any;
@@ -9,18 +8,22 @@ enum ObjectChangeType { Name = 0, Parent = 1, Map = 2, New = 3, Remove = 4, NewM
 this.ObjectChangeType = ObjectChangeType;
 
 class c4e {
+
     public static ObjectChanged:string = "ObjectChanged";
+    public static StoryClockChange : string = "StoryClockChange";
     public static RequestObjectChange:string = "RequestObjectChange";
 }
 this.c4e = c4e;
 
 class EventHandlers {
+
     public event:string;
     public callback:any;
     constructor(event, callback) {
         this.event = event;
         this.callback = callback;
     }
+
 }this.EventHandlers = EventHandlers;
 
 class C4EventClass {
@@ -49,17 +52,18 @@ class C4EventClass {
         }
     }
     public emit(event, object:EventMessage) {
-        C4Event.eventEmitter.emit(event, object);
+        MyApp.C4Event.eventEmitter.emit(event, object);
     }
     public on(event, callback) {
         if (this.handlerExists(event, callback))
             return;
         var eventItem = new EventHandlers(event, callback);
         this.eventHandlers.push(eventItem);
-        C4Event.eventEmitter.on(event, callback);
+        MyApp.C4Event.eventEmitter.on(event, callback);
     }
     public removeListener(event, callback) {
         this.deleteHandler(event, callback);
-        C4Event.eventEmitter.removeListener(event, callback);
+        MyApp.C4Event.eventEmitter.removeListener(event, callback);
     }
+
 } this.C4EventClass = C4EventClass;

@@ -20,6 +20,11 @@
  retrocycle, stringify, test, toString
  */
 
+
+interface JSON {
+    decycle(object : any)
+    retrocycle($ : any)
+}
 if (typeof JSON.decycle !== 'function') {
     JSON.decycle = function decycle(object) {
         'use strict';

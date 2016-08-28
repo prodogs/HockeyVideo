@@ -1,6 +1,5 @@
-/// <reference path="../../Video/typescript-defs/all-definitions.d.ts"/>
-
 console.log("Loading AA_ObjectUpdateRouter.ts ...");
+
 class ObjectUpdateStats {
 	type:string;
 	counter:number = 0;
@@ -40,7 +39,7 @@ class ObjectUpdateRouter extends C4Object {
 		changeMessage.changeType = ObjectChangeType.Change;
 		changeMessage.classType  = object.classType
 		changeMessage.origin     = "router";
-		C4Event.emit(c4e.ObjectChanged, changeMessage);
+		MyApp.C4Event.emit(c4e.ObjectChanged, changeMessage);
 	}
 	public static SendRemoveObject(id:string, classType:ClassType) {
 		var changeMessage = new ObjectChangeMessage();
@@ -50,7 +49,7 @@ class ObjectUpdateRouter extends C4Object {
 		changeMessage.classType  = classType;
 		changeMessage.origin     = "router";
 		changeMessage.removeID   = id;
-		C4Event.emit(c4e.ObjectChanged, changeMessage);
+		MyApp.C4Event.emit(c4e.ObjectChanged, changeMessage);
 	}
 	public static SendAddObject(object:any) {
 		var changeMessage = new ObjectChangeMessage();
@@ -59,7 +58,7 @@ class ObjectUpdateRouter extends C4Object {
 		changeMessage.changeType = ObjectChangeType.New;
 		changeMessage.classType  = object.classType
 		changeMessage.origin     = "router";
-		C4Event.emit(c4e.ObjectChanged, changeMessage);
+		MyApp.C4Event.emit(c4e.ObjectChanged, changeMessage);
 	}
 	public static StartObservations() : ObjectUpdateRouter {
 		if (this._observing) return;
@@ -122,5 +121,4 @@ class ObjectUpdateRouter extends C4Object {
 		if (!ObjectUpdateRouter._observing) return;
 		this.stopObserve();
 	}
-}
-this.ObjectUpdateRouter = ObjectUpdateRouter;
+} this.ObjectUpdateRouter = ObjectUpdateRouter;

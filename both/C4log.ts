@@ -1,13 +1,13 @@
-/// <reference path="../typescript-defs/all-definitions.d.ts"/>
-/// <reference path="../typescript-defs/stack-trace.d.ts"/>
-
 declare var C4logDB:Mongo.Collection<any>
 declare var StackFrame:any;
 declare var StackTraceGPS:any;
 declare var StackTrace:any;
 
 console.log("Loading AppLog.ts ...");
-
+interface JSON {
+    decycle(object : any)
+    retrocycle($ : any)
+}
 class AppLog {
 
     public static infoReport:boolean = true;
@@ -21,7 +21,7 @@ class AppLog {
     }
     public static  stackTrace():Array<any> {
         var err:Error = new Error();
-        return err["stack"];
+        return null;
     }
     public static printThis(theObject) {
         console.log(JSON.stringify(theObject, null, 7));
