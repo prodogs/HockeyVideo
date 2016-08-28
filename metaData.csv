@@ -1,0 +1,7 @@
+"_id",classType,structureType,proxyClass,proxyClassString,objectClassString,timeCapsule,collection,description,rootName,label,subjectDetail,subjectManager,htmlIcon,isPersistant,measureable,observeUpdates
+5677428708de494a4d6ba64a,systemHealth,0,Subject,Subject,Subject,true,SystemHealthStore,System Health,systemHealthRoot,System Health,SubjectDetail,,<span class='webix_icon fa-briefcase'></span>,true,false,true
+5677428708de494a4d6ba654,map,2,Maps,Maps,Subject,true,MapStore,Map,mapRoot,Map,,GenericManager,<span class='webix_icon fa-globe'></span>,false,false,true
+5677428708de494a4d6ba658,library,4,LibraryBase,LibraryBase,Subject,true,LibraryStore,Library,libraryRoot,Library,,,<span class='webix_icon fa-globe'></span>,true,false,true
+5677428708de494a4d6ba659,folder,3,FolderBase,FolderBase,Subject,true,FolderStore,folder,folderRoot,Folder,,,<span class='webix_icon fa-globe'></span>,true,false,true
+5677428708de494a4d6ba660,timeMachine,0,BaseClass,BaseClass,Subject,false,TimeMachineStore,TimeMachine,timeMachineRoot,Time Machine Respository,,TimeMachineManager,<span class='webix_icon fa-globe'></span>,true,false,true
+5677428708de494a4d6ba665,counter,0,BaseClass,CounterClass,Subject,true,CounterStore,Diagram File Index,diagramFileIndexRoot,Diagram File Index,,,<span class='webix_icon fa-globe'></span>,true,false,true
