@@ -15,7 +15,6 @@ Template["videoPane"].onRendered(function () {
     annotationPerspective.setOverlay(videoPerspective);
     story.addPerspective(annotationPerspective);
 
-
     var circle = new CircleAnnotation();
     circle.startTime = 1;
     circle.endTime = 15;
@@ -39,6 +38,11 @@ Template["videoPane"].onRendered(function () {
     text.endTime = 30;
     text.setPerspective(annotationPerspective);
     story.addEvent(text);
+
+    var videoEvent = new VideoEvent(VideoAction.Pause);
+    videoEvent.startTime = 3;
+    videoEvent.endTime = 5;
+    story.addEvent(videoEvent);
 
     var thePortal = new Portal();
     var portalRoot = thePortal.getRoot();

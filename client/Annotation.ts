@@ -145,7 +145,7 @@ class VEvent {
         switch (this.timerType) {
 
             case TimerType.StartEnd : {
-                if ( (time > this.startTime) && (time < this.endTime) )
+                if ( (time >= this.startTime) && (time <= this.endTime) )
                     return true;
                 else
                 {
@@ -153,23 +153,23 @@ class VEvent {
                     }
             }
             case TimerType.Duration : {
-                if ((time > this.startTime) && time < (this.startTime + this.duration))
+                if ((time >= this.startTime) && time <=(this.startTime + this.duration))
                     return true;
                 else
                     return false;
             }
             case TimerType.AtStart : {
-                if ( time > this.startTime)
+                if ( time >= this.startTime)
                     return true;
                 return false;
             }
             case TimerType.AtEnd : {
-                if (time > this.endTime)
+                if (time >= this.endTime)
                         return true;
                 return false;
             }
             case TimerType.StartNoEnd : {
-                if ( time > this.startTime)
+                if ( time >= this.startTime)
                     return true;
                 return false;
             }
@@ -241,6 +241,7 @@ class Story implements Player {
         this.clock = new Clock();
 
         Story.story = this;
+        this.defineEvents();
     }
 
     public static render() {
@@ -263,6 +264,9 @@ class Story implements Player {
             window.msCancelRequestAnimationFrame ||
             clearTimeout;
     }
+    public static ChangeAnnotation(changeAnnotation : Annotation) {
+        Story.story.changeToAnnotation(changeAnnotation);
+    }
     public getEvents() : Array<VEvent> {
         return this.events;
     }
@@ -278,6 +282,9 @@ class Story implements Player {
     public getTime() : number {
         return this.clock.getTime();
     }
+    public changeToAnnotation(annotation : Annotation) {
+        this.seek(annotation.startTime);
+    }
     public play() {
         for (var i = 0 ;i< this.perspectives.length;i++)
             this.perspectives[i].play();
@@ -288,6 +295,10 @@ class Story implements Player {
             this.perspectives[i].pause();
         }
         Story.cancelRequestAnimFrame(this.request);
+    }
+    public seek(time : number) {
+        this.setTime(time);
+        this.pause();
     }
     public restart() {
         for (var i=0;i<this.events.length;i++) {
@@ -311,6 +322,12 @@ class Story implements Player {
             this.events[i].action(time);
         }
     }
+
+    public defineEvents() {
+
+        MyApp.C4Event.on("ChangeToAnnotation"  , Story.ChangeAnnotation)
+    }
+
 
 } this.Story = Story;
 
@@ -422,12 +439,40 @@ class AnnotationPerspective extends Perspective {
 
 class ClipboardPerspective extends Perspective { } this.ClipboardPerspective = ClipboardPerspective;
 
+enum VideoAction {
+    Pause=1,
+    Play,
+    Slow,
+    Fast
+}
 class VideoEvent extends VEvent {
 
+    protected _speed : number = 0;
+    public videoAction : VideoAction;
     public perspective : Perspective;
 
+    constructor(action : VideoAction, speed? : number) {
+        super();
+        this.videoAction = action;
+        this.speed = speed;
+    }
+    public get speed() : number {
+        return this._speed;
+    }
+    public set speed(value : number) {
+        this._speed = value;
+    }
     public setPerspective (perspective : Perspective) {
         this.perspective = perspective;
+    }
+    public activate() {
+        super.activate();
+        UI.Info("Activate VideoEvent");
+    }
+    public inactivate() {
+        super.inactivate();
+        UI.Info("InActivate VideoEvent");
+
     }
 
 } this.VideoEvent = VideoEvent;
@@ -462,7 +507,7 @@ class DrawAnnotation extends Annotation {
 
     public defaultFill         : string = "blue";
     public defaultStroke       : string = "black";
-    public defaultOpacity      : number = .5;
+    public defaultOpacity      : number = .2;
     public defaultStrokeWidth  : number = 2;
 
     constructor() {
@@ -827,25 +872,38 @@ class UIAnnotationTable extends UIDataTable {
 
         this.setEditable(true);
         var index=0;
-        this.addColumn(index++, {id: "label", header: "Name", width: 100, sort: "string", editor: "text"});
+        this.addColumn(index++, {id: "label",   header: "Name", width: 100, sort: "string", editor: "text"});
         this.addColumn(index++, {id: "startTime", header: "Start", width: 100, sort: "string", editor: "text"});
         this.addColumn(index++, {id: "endTime", header: "End", width: 100, sort: "string", editor: "text"});
-        this.addColumn(index++, {id: "left", header: "Left", width: 100, sort: "string", editor: "text"});
-        this.addColumn(index++, {id: "top", header: "Top", width: 100, sort: "string", editor: "text"});
-        this.addColumn(index++, {id: "height", header: "Height", width: 100, sort: "string", editor: "text"});
-        this.addColumn(index++, {id: "width", header: "Width", width: 100, sort: "string", editor: "text"});
-        this.addColumn(index++, {id: "scaleX", header: "ScaleX", width: 100, sort: "string", editor: "text"});
-        this.addColumn(index++, {id: "scaleY", header: "ScaleY", width: 100, sort: "string", editor: "text"});
-
+        this.addColumn(index++, {id: "left",    header: "Left", width: 100, sort: "string", editor: "text"});
+        this.addColumn(index++, {id: "top",     header: "Top", width: 100, sort: "string", editor: "text"});
+        this.addColumn(index++, {id: "height",  header: "Height", width: 100, sort: "string", editor: "text"});
+        this.addColumn(index++, {id: "width",   header: "Width", width: 100, sort: "string", editor: "text"});
+        this.addColumn(index++, {id: "scaleX",  header: "ScaleX", width: 100, sort: "string", editor: "text"});
+        this.addColumn(index++, {id: "scaleY",  header: "ScaleY", width: 100, sort: "string", editor: "text"});
 
         this.defineEvents();
         return super.getView();
     }
-
+    public listen(event:any, object:any, caller:UIComponent) {
+        switch (event) {
+            case "onSelectChange" : {
+                var anObject = this.getSelectedObject();
+                UI.Info("Selection Change --> "+ anObject["label"]);
+                MyApp.C4Event.emit("ChangeToAnnotation",anObject);
+            }
+            break;
+        }
+    }
     public defineEvents() {
         super.defineEvents();
 
         MyApp.C4Event.on("AnnotationChanged",UIAnnotationTable.Modified);
+        this.subscribe("onSelectChange",this);
     }
 
 } this.UIAnnotationTable = UIAnnotationTable;
+
+class UIAnnotationEditor extends UIComplexComponent {
+
+} this.UIAnnotationEditor = UIAnnotationEditor;

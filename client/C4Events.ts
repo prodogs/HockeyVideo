@@ -12,10 +12,13 @@ class c4e {
     public static ObjectChanged:string = "ObjectChanged";
     public static StoryClockChange : string = "StoryClockChange";
     public static RequestObjectChange:string = "RequestObjectChange";
+    public static ChangeToAnnotation:string = "ChangeToAnnotation";
+
 }
 this.c4e = c4e;
 
 class EventHandlers {
+
 
     public event:string;
     public callback:any;
