@@ -1,11 +1,8 @@
 <template name="videoPane">
-
-    <video controls width="720" height="480" id="videoDiv" style="display: none"  muted>
+ <video controls width="1020" height="680" id="videoDiv" style="display: none"  muted>
         <source src="http://localhost:3000/1.mp4" type='video/mp4' />
     </video>
-    <div id="videoControls-container"></div>
+        <canvas id="fabricCanvas" width="1020" height="680" style="border:1px solid #ccc"></canvas>
 
-    <canvas id="fabricCanvas" width="1200" height="800" style="border:1px solid #ccc"></canvas>
-
-
+        <div id="videoControls-container"></div>
 </template>

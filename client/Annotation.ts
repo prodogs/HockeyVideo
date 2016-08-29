@@ -29,12 +29,18 @@ class VEvent {
     protected y                 : number=10;
     public durationBased        : boolean = false;
     public object               : fabric.IObject = null;
-    public label                : string;
+    public _label                : string;
     public isActive             : boolean = false;
     public lastCheckTime        : number =0;
     public perspective          : Perspective;
     public currentCheckTime     : number=0;
 
+    public get label(): string {
+        return this._label;
+    }
+    public set label(value : string) {
+        this._label = value;
+    }
     public get left() : number {
         if (this.object) {
             return this.object.get("left");
@@ -444,7 +450,8 @@ enum VideoAction {
     Play,
     Slow,
     Fast
-}
+} this.VideoAction = VideoAction;
+
 class VideoEvent extends VEvent {
 
     protected _speed : number = 0;
@@ -453,8 +460,15 @@ class VideoEvent extends VEvent {
 
     constructor(action : VideoAction, speed? : number) {
         super();
+        this._label = "Video";
         this.videoAction = action;
         this.speed = speed;
+    }
+    public get label() : string {
+        return "Video "+"Pause";
+    }
+    public set label(value : string) {
+        this._label = value;
     }
     public get speed() : number {
         return this._speed;
@@ -466,13 +480,15 @@ class VideoEvent extends VEvent {
         this.perspective = perspective;
     }
     public activate() {
+        if (this.isActive) return;
         super.activate();
+        this.isActive = true;
         UI.Info("Activate VideoEvent");
     }
     public inactivate() {
+        if (!this.isActive) return;
         super.inactivate();
-        UI.Info("InActivate VideoEvent");
-
+        this.isActive = false;
     }
 
 } this.VideoEvent = VideoEvent;

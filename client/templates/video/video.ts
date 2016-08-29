@@ -21,11 +21,13 @@ Template["videoPane"].onRendered(function () {
     circle.setPerspective(annotationPerspective);
     story.addEvent(circle);
 
-    circle = new CircleAnnotation();
-    circle.startTime = 15;
-    circle.endTime = 30;
-    circle.setPerspective(annotationPerspective);
-    story.addEvent(circle);
+    var circle2 = new RectAnnotation();
+    circle2.startTime = 13;
+    circle2.endTime = 30;
+    circle2.top = 200;
+    circle2.left=200;
+    circle2.setPerspective(annotationPerspective);
+    story.addEvent(circle2);
 
     var rect = new RectAnnotation();
     rect.startTime = 3;
