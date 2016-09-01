@@ -456,7 +456,9 @@ class VideoEvent extends VEvent {
 
     protected _speed : number = 0;
     public videoAction : VideoAction;
+    public timerHandle : number;
     public perspective : Perspective;
+    public triggerTime : number;
 
     constructor(action : VideoAction, speed? : number) {
         super();
@@ -484,12 +486,82 @@ class VideoEvent extends VEvent {
         super.activate();
         this.isActive = true;
         UI.Info("Activate VideoEvent");
+        setTimeout(function(e : VideoEvent) {
+            e.inactivate();
+        }, (this.endTime - this.startTime)*1000  ,this);
+
     }
     public inactivate() {
         if (!this.isActive) return;
+        UI.Info("InActivate VideoEvent");
         super.inactivate();
         this.isActive = false;
     }
+
+    public action(time : number ) {
+
+        this.lastCheckTime = this.currentCheckTime;
+        this.currentCheckTime = time;
+
+        if ( this.inActiveTime(time) ) {
+            this.activate();
+            this.tiggerTime = time;
+        }
+        else
+            this.inactivate();
+    }
+
+    public activate() {
+        if (this.triggerTime != null)
+            return;
+        this.triggerTime = this.currentCheckTime;
+        super.activate();
+    }
+
+    public inactivate() {
+        this.triggerTime = null;
+        super.inactivate();
+    }
+
+    public inActiveTime(time : number) : boolean {
+
+        switch (this.timerType) {
+
+            case TimerType.StartEnd : {
+                if ( (time >= this.startTime) && (time <= this.endTime) )
+                    return true;
+                else
+                {
+                    return false;
+                }
+            }
+            case TimerType.Duration : {
+                if ((time >= this.startTime) ) {
+                    return true;
+
+                }
+                else
+                    return false;
+            }
+            case TimerType.AtStart : {
+                if ( time >= this.startTime)
+                    return true;
+                return false;
+            }
+            case TimerType.AtEnd : {
+                if (time >= this.endTime)
+                    return true;
+                return false;
+            }
+            case TimerType.StartNoEnd : {
+                if ( time >= this.startTime)
+                    return true;
+                return false;
+            }
+        }
+        return false;
+    }
+
 
 } this.VideoEvent = VideoEvent;
 
@@ -547,8 +619,6 @@ class DrawAnnotation extends Annotation {
         this.opacity = this.object.opacity;
         this.strokeWidth = this.object.strokeWidth;
     }
-
-
 
 } this.DrawAnnotation = DrawAnnotation;
 
@@ -843,7 +913,7 @@ class FabricPlayer implements Player {
         this.playerCanvas.add(this.videoObject);
     }
     public play() {
-        this.videoObject.getElement().play();
+       // this.videoObject.getElement().play();
         FabricPlayer.videoPlayer.play();
     }
     public stop() {}
@@ -888,15 +958,10 @@ class UIAnnotationTable extends UIDataTable {
 
         this.setEditable(true);
         var index=0;
-        this.addColumn(index++, {id: "label",   header: "Name", width: 100, sort: "string", editor: "text"});
-        this.addColumn(index++, {id: "startTime", header: "Start", width: 100, sort: "string", editor: "text"});
-        this.addColumn(index++, {id: "endTime", header: "End", width: 100, sort: "string", editor: "text"});
-        this.addColumn(index++, {id: "left",    header: "Left", width: 100, sort: "string", editor: "text"});
-        this.addColumn(index++, {id: "top",     header: "Top", width: 100, sort: "string", editor: "text"});
-        this.addColumn(index++, {id: "height",  header: "Height", width: 100, sort: "string", editor: "text"});
-        this.addColumn(index++, {id: "width",   header: "Width", width: 100, sort: "string", editor: "text"});
-        this.addColumn(index++, {id: "scaleX",  header: "ScaleX", width: 100, sort: "string", editor: "text"});
-        this.addColumn(index++, {id: "scaleY",  header: "ScaleY", width: 100, sort: "string", editor: "text"});
+        this.addColumn(index++, {id: "label",       header: "Name",     width: 100, sort: "string", editor: "text"});
+        this.addColumn(index++, {id: "startTime",   header: "Start",    width: 100, sort: "string", editor: "text"});
+        this.addColumn(index++, {id: "endTime",     header: "End",      width: 100, sort: "string", editor: "text"});
+        this.addColumn(index++, {id: "duration",    header: "Duration", width: 100, sort: "string", editor: "text"});
 
         this.defineEvents();
         return super.getView();

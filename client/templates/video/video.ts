@@ -44,6 +44,7 @@ Template["videoPane"].onRendered(function () {
     var videoEvent = new VideoEvent(VideoAction.Pause);
     videoEvent.startTime = 3;
     videoEvent.endTime = 5;
+    videoEvent.timerType = TimerType.Duration;
     story.addEvent(videoEvent);
 
     var thePortal = new Portal();
