@@ -229,6 +229,7 @@ interface Player {
     getTime() : number;
     setTime(time : number);
     duration() : number;
+    playbackRate(speed : number);
 
 }
 
@@ -312,6 +313,7 @@ class Story implements Player {
         }
     }
     public stop() { }
+    public playbackRate(theSpeed : number) {}
     public duration() : number { return 0;}
     public renderPerspectives() {
         for (var i=0;i<this.perspectives.length;i++) {
@@ -363,7 +365,11 @@ class VideoPlayer implements Player {
         this.videoElement.pause();
     }
     public stop() {
-        this.videoElement.getElement().stop();
+        this.videoElement.stop();
+    }
+    public playbackRate(theSpeed : number) {
+        this.videoElement.playbackRate = theSpeed;
+
     }
     public duration() : number {
         return 0;
@@ -404,6 +410,7 @@ class Perspective {
     }
     public play() {}
     public pause() {}
+    public playbackRate(theRate : number) {}
     public renderAll() {
     }
 
@@ -433,6 +440,10 @@ class VideoPerspective extends Perspective {
     public pause() {
         this.fabricPlayer.pause();
     }
+    public playbackRate(theRate : number) {
+        this.fabricPlayer.playbackRate(theRate);
+    }
+
     public renderAll() {
         this.fabricPlayer.getCanvas().renderAll();
     }
@@ -459,12 +470,14 @@ class VideoEvent extends VEvent {
     public timerHandle : number;
     public perspective : Perspective;
     public triggerTime : number;
+    public trigger : boolean= false;
 
     constructor(action : VideoAction, speed? : number) {
         super();
         this._label = "Video";
         this.videoAction = action;
         this.speed = speed;
+        this.timerType = TimerType.Duration;
     }
     public get label() : string {
         return "Video "+"Pause";
@@ -483,9 +496,25 @@ class VideoEvent extends VEvent {
     }
     public activate() {
         if (this.isActive) return;
+
+        if (this.trigger)
+            return;
+
+        this.trigger = true;
         super.activate();
         this.isActive = true;
         UI.Info("Activate VideoEvent");
+
+        switch (this.videoAction) {
+            case VideoAction.Pause : {
+                this.perspective.pause();
+            }
+            break;
+            case VideoAction.Slow : {
+                this.perspective.playbackRate(this.speed);
+            }
+                break;
+        }
         setTimeout(function(e : VideoEvent) {
             e.inactivate();
         }, (this.endTime - this.startTime)*1000  ,this);
@@ -494,36 +523,43 @@ class VideoEvent extends VEvent {
     public inactivate() {
         if (!this.isActive) return;
         UI.Info("InActivate VideoEvent");
+
+
+        switch (this.videoAction) {
+            case VideoAction.Pause : {
+                this.perspective.play();
+            }
+            break;
+            case VideoAction.Slow : {
+                this.perspective.playbackRate(1);
+            }
+                break;
+
+        }
         super.inactivate();
         this.isActive = false;
+        this.trigger = false;
+        this.triggerTime = this.currentCheckTime;
     }
-
     public action(time : number ) {
-
         this.lastCheckTime = this.currentCheckTime;
         this.currentCheckTime = time;
 
         if ( this.inActiveTime(time) ) {
             this.activate();
-            this.tiggerTime = time;
+            this.triggerTime = time;
         }
         else
             this.inactivate();
     }
-
-    public activate() {
-        if (this.triggerTime != null)
-            return;
-        this.triggerTime = this.currentCheckTime;
-        super.activate();
-    }
-
-    public inactivate() {
-        this.triggerTime = null;
-        super.inactivate();
-    }
-
     public inActiveTime(time : number) : boolean {
+
+        if (this.trigger)
+                return true;
+        if (time < this.startTime) {
+            this.triggerTime = null;
+            this.trigger = false
+        }
 
         switch (this.timerType) {
 
@@ -537,8 +573,10 @@ class VideoEvent extends VEvent {
             }
             case TimerType.Duration : {
                 if ((time >= this.startTime) ) {
-                    return true;
-
+                    if (this.triggerTime == null)
+                        return true;
+                    if (time > this.triggerTime)
+                        return false;
                 }
                 else
                     return false;
@@ -921,7 +959,7 @@ class FabricPlayer implements Player {
         return this.playerCanvas;
     }
     public pause() {
-        this.videoObject.getElement().pause();
+        //this.videoObject.getElement().pause();
         FabricPlayer.videoPlayer.pause();
     }
     public duration() : number { return 0;}
@@ -931,6 +969,10 @@ class FabricPlayer implements Player {
     }
     public getTime() : number {
         return this.currentTime();
+    }
+    public playbackRate(speed : number) {
+        FabricPlayer.videoPlayer.playbackRate(speed);
+
     }
     public setTime(time : number) {
         if (time < 0) time = 0;

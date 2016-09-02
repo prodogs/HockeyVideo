@@ -44,8 +44,26 @@ Template["videoPane"].onRendered(function () {
     var videoEvent = new VideoEvent(VideoAction.Pause);
     videoEvent.startTime = 3;
     videoEvent.endTime = 5;
-    videoEvent.timerType = TimerType.Duration;
+    videoEvent.setPerspective(videoPerspective);
     story.addEvent(videoEvent);
+
+    videoEvent = new VideoEvent(VideoAction.Slow);
+    videoEvent.startTime = 8;
+    videoEvent.endTime = 15;
+    videoEvent.speed = .5;
+    videoEvent.setPerspective(videoPerspective);
+    story.addEvent(videoEvent);
+
+
+    videoEvent = new VideoEvent(VideoAction.Slow);
+    videoEvent.startTime = 20;
+    videoEvent.endTime = 25;
+    videoEvent.speed = 3
+    videoEvent.setPerspective(videoPerspective);
+    story.addEvent(videoEvent);
+
+
+
 
     var thePortal = new Portal();
     var portalRoot = thePortal.getRoot();
