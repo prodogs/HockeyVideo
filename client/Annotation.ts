@@ -211,11 +211,11 @@ class Clock {
   public setSyncPlayer(thePlayer : Player) {
         this.clockPlayer = thePlayer;
     }
-  public getTime() : number {
-      return this.clockPlayer.getTime();
+  public currentTime() : number {
+      return this.clockPlayer.currentTime();
   }
-  public setTime(time : number) {
-      this.clockPlayer.setTime(time);
+  public setCurrentTime(time : number) {
+      this.clockPlayer.setCurrentTime(time);
 
   }
 
@@ -226,8 +226,8 @@ interface Player {
     play;
     stop;
     pause;
-    getTime() : number;
-    setTime(time : number);
+    currentTime() : number;
+    setCurrentTime(time : number);
     duration() : number;
     playbackRate(speed : number);
 
@@ -256,7 +256,7 @@ class Story implements Player {
         Story.story.renderPerspectives();
 
         Story.story.request = fabric.util.requestAnimFrame(Story.render);
-        var current_time = Story.story.clock.getTime();
+        var current_time = Story.story.clock.currentTime();
         if(current_time >= 100) {
             Story.story.pause();
             return;
@@ -283,14 +283,8 @@ class Story implements Player {
     public addEvent(vEvent : VEvent) {
         this.events.push(vEvent);
     }
-    public setTime(time : number) {
-        this.clock.setTime(time);
-    }
-    public getTime() : number {
-        return this.clock.getTime();
-    }
     public changeToAnnotation(annotation : Annotation) {
-        this.seek(annotation.startTime);
+        this.setCurrentTime(annotation.startTime);
     }
     public play() {
         for (var i = 0 ;i< this.perspectives.length;i++)
@@ -303,9 +297,11 @@ class Story implements Player {
         }
         Story.cancelRequestAnimFrame(this.request);
     }
-    public seek(time : number) {
-        this.setTime(time);
-        this.pause();
+    public currentTime() : number {
+        return this.clock.currentTime();
+    }
+    public setCurrentTime(time : number) {
+        this.clock.setCurrentTime(time);
     }
     public restart() {
         for (var i=0;i<this.events.length;i++) {
@@ -344,6 +340,7 @@ class VideoPlayer implements Player {
     public videoJS      : any = null;
     public videoID      : string;
     public videoElement : any;
+    public _currentTime : number;
 
     constructor ( videoID : string){
         this.videoID = videoID;
@@ -358,6 +355,12 @@ class VideoPlayer implements Player {
          }) */
     }
 
+    public  currentTime() : number {
+       return this.videoElement.currentTime;
+    }
+    public setCurrentTime(time : number) {
+        this.videoElement.currentTime = time;
+    }
     public play() {
         this.videoElement.play();
     }
@@ -374,28 +377,30 @@ class VideoPlayer implements Player {
     public duration() : number {
         return 0;
     }
-    public currentTime() : number {
-        var current_time = this.videoElement.currentTime;
-        return current_time;
-    }
+
     public getDuration() : number {
         return this.videoElement.duration;
     }
-    public getTime() : number {
-        return this.currentTime();
-    }
-    public setTime(time : number) {
-        this.videoElement.currentTime(time);
-    }
+
 
 } this.VideoPlayer = VideoPlayer;
 
 class Perspective {
 
+    public fabricPlayer : FabricPlayer;
     public fabricCanvas : any;
+    public canvasDiv : string= null;
     public overlayPerspective : Perspective = null;
     public story : Story;
 
+    constructor() {
+
+    }
+
+    public setCanvas(canvasDiv : string) {
+        this.fabricPlayer = new FabricPlayer();
+        this.fabricPlayer.setCanvas(canvasDiv);
+    }
     public setOverlay(perspective : Perspective) {
         this.overlayPerspective = perspective;
     }
@@ -403,7 +408,8 @@ class Perspective {
         if (this.overlayPerspective != null) {
             return this.overlayPerspective.getCanvas();
         }
-        return this.fabricCanvas;
+
+        return this.fabricPlayer.getCanvas();
     }
     public setStory(theStory : Story) {
         this.story = theStory;
@@ -411,7 +417,11 @@ class Perspective {
     public play() {}
     public pause() {}
     public playbackRate(theRate : number) {}
+    public currentTime() : number { return 0;}
+    public setCurrentTime(time : number) {}
     public renderAll() {
+        if (this.fabricPlayer)
+            this.fabricPlayer.getCanvas().renderAll();
     }
 
 } this.Perspective = Perspective;
@@ -420,7 +430,6 @@ class VideoPerspective extends Perspective {
 
     public canvasDiv = "fabricCanvas";
     public videoDiv = "videoDiv";
-    public fabricPlayer : FabricPlayer;
     public videoPlayer : VideoPlayer;
 
     constructor() {
@@ -443,9 +452,11 @@ class VideoPerspective extends Perspective {
     public playbackRate(theRate : number) {
         this.fabricPlayer.playbackRate(theRate);
     }
-
-    public renderAll() {
-        this.fabricPlayer.getCanvas().renderAll();
+    public currentTime() : number {
+        return this.fabricPlayer.currentTime();
+    }
+    public setCurrentTime(time : number) {
+        this.fabricPlayer.setCurrentTime(time);
     }
 
 } this.VideoPerspective = VideoPerspective;
@@ -454,12 +465,45 @@ class AnnotationPerspective extends Perspective {
 
 } this.AnnotationPerspective = AnnotationPerspective;
 
-class ClipboardPerspective extends Perspective { } this.ClipboardPerspective = ClipboardPerspective;
+class ClipboardPerspective extends Perspective {
+
+    public imageObject : any = null;
+    public imageURL : string;
+    public static LoadObject : ClipboardPerspective;
+    public static LoadArray : Array<ClipboardPerspective> = new Array<ClipboardPerspective>();
+
+    constructor(clipboardURL : string) {
+        super();
+        this.imageURL = clipboardURL
+        ClipboardPerspective.LoadArray[clipboardURL] = this;
+    }
+
+    public static LoadImage(oImg : any) {
+        {
+            var theClipboard = ClipboardPerspective.LoadArray[oImg._element.currentSrc];
+            theClipboard.fabricPlayer.getCanvas().add(oImg);
+            theClipboard.imageObject = oImg;
+            console.log("inside here");
+        }
+
+    }
+    public play() {
+
+        if (this.imageObject==null) {
+               this.imageObject = fabric.Image.fromURL(this.imageURL,ClipboardPerspective.LoadImage);
+
+        }
+    }
+
+
+} this.ClipboardPerspective = ClipboardPerspective;
 
 enum VideoAction {
     Pause=1,
     Play,
     Slow,
+        Seek,
+        Advance,
     Fast
 } this.VideoAction = VideoAction;
 
@@ -471,6 +515,7 @@ class VideoEvent extends VEvent {
     public perspective : Perspective;
     public triggerTime : number;
     public trigger : boolean= false;
+    public _advance : number = 0;
 
     constructor(action : VideoAction, speed? : number) {
         super();
@@ -479,6 +524,13 @@ class VideoEvent extends VEvent {
         this.speed = speed;
         this.timerType = TimerType.Duration;
     }
+
+    public get advance() : number {
+         return this._advance;
+     }
+    public set advance(timeDelta : number) {
+         this._advance =timeDelta;
+     }
     public get label() : string {
         return "Video "+"Pause";
     }
@@ -509,12 +561,21 @@ class VideoEvent extends VEvent {
             case VideoAction.Pause : {
                 this.perspective.pause();
             }
-            break;
+                break;
             case VideoAction.Slow : {
                 this.perspective.playbackRate(this.speed);
             }
                 break;
+            case VideoAction.Seek : {
+                this.perspective.playbackRate(this.speed);
+            }
+                break;
+            case VideoAction.Advance : {
+                this.perspective.setCurrentTime(this.perspective.currentTime()+this.advance);
+                return;
+            }
         }
+
         setTimeout(function(e : VideoEvent) {
             e.inactivate();
         }, (this.endTime - this.startTime)*1000  ,this);
@@ -898,13 +959,13 @@ class UIPlayerControls extends UIComplexComponent {
             }
                 break;
             case "back10Button":
-            { this.thePlayer.setTime( this.thePlayer.getTime()-10); }
+            { this.thePlayer.setCurrentTime( this.thePlayer.currentTime()-10); }
                 break;
             case "stepBackward":
-            { this.thePlayer.setTime( this.thePlayer.getTime()-.2); }
+            { this.thePlayer.setCurrentTime( this.thePlayer.currentTime()-.2); }
                 break;
             case "stepForward":
-            {  this.thePlayer.setTime( this.thePlayer.getTime()+.2); }
+            {  this.thePlayer.setCurrentTime( this.thePlayer.currentTime()+.2); }
                 break;
         }
     }
@@ -937,7 +998,6 @@ class FabricPlayer implements Player {
 
         this.playerCanvas = new fabric.Canvas(element);
     }
-
     public setVideo(videoPlayer : VideoPlayer) {
 
         FabricPlayer.videoPlayer = videoPlayer;
@@ -963,20 +1023,16 @@ class FabricPlayer implements Player {
         FabricPlayer.videoPlayer.pause();
     }
     public duration() : number { return 0;}
-    public currentTime() : number {
-        var current_time = this.videoElement.currentTime;
-        return current_time;
-    }
-    public getTime() : number {
-        return this.currentTime();
-    }
     public playbackRate(speed : number) {
         FabricPlayer.videoPlayer.playbackRate(speed);
 
     }
-    public setTime(time : number) {
+    public setCurrentTime(time : number) {
         if (time < 0) time = 0;
         this.videoObject.getElement().currentTime = time;
+    }
+    public currentTime():number {
+        return this.videoObject.getElement().currentTime;
     }
 
 }  this.FabricPlayer = FabricPlayer;

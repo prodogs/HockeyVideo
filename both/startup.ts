@@ -12,10 +12,11 @@ Meteor.startup(function () {
 		if (window)
 			window.onerror = AppLog.defaultExceptionHandler;
 	}
+	/*
 	EJSON.addType("RelationshipMetaData", function fromJSONValue(value:any):any {
-	//	var newObject = new RelationshipMetaData();
-	//	newObject.fromJSONValue(value);
-	//	return newObject;
+		var newObject = new RelationshipMetaData();
+		newObject.fromJSONValue(value);
+		return newObject;
 	});
 	EJSON.addType("RelationshipLabels", function fromJSONValue(value:any):any {
 	//	var newObject = new RelationshipLabels();
@@ -27,4 +28,6 @@ Meteor.startup(function () {
 	//	newObject.fromJSONValue(value);
 	//	return newObject;
 	});
+	*/
+
 });

@@ -1,8 +1,16 @@
 <template name="videoPane">
- <video controls width="1020" height="680" id="videoDiv" style="display: none"  muted>
+    <video controls width="1020" height="680" id="videoDiv" style="display: none"  muted>
         <source src="http://localhost:3000/1.mp4" type='video/mp4' />
-</video>
-        <canvas id="fabricCanvas" width="1020" height="680" style="border:1px solid #ccc"></canvas>
+    </video>
+<table border="1">
+<tr>
+   <td>    <canvas id="fabricCanvas" width="1020" height="680" style="border:1px solid #ccc"></canvas></td>
+    <tr><td>    <canvas id="goalCanvas" width="500" height="350" style="border:1px solid #ccc"></canvas></td></tr>
 
-        <div id="videoControls-container"></div>
+    <tr><td>    <canvas id="rinkCanvas" width="500" height="350" style="border:1px solid #ccc"></canvas></td></tr>
+</tr>
+
+
+</table>
+    <div id="videoControls-container"></div>
 </template>

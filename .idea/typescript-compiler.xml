@@ -2,6 +2,7 @@
 <project version="4">
   <component name="TypeScriptCompiler">
     <option name="isCompilerEnabled" value="true" />
+    <option name="typeScriptCompilerParams" value="--module  &quot;ES6&quot;" />
     <option name="nodeInterpreterTextField" value="/usr/bin/node" />
     <option name="hasOutDirectory" value="true" />
     <option name="outDirectory" value="$PROJECT_DIR$/../Trash" />

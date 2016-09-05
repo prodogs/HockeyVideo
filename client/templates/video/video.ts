@@ -8,18 +8,40 @@ Template["videoPane"].onRendered(function () {
     var story = new Story();
 
     var videoPerspective = new VideoPerspective();
-
     story.addPerspective(videoPerspective);
 
     var annotationPerspective = new AnnotationPerspective();
     annotationPerspective.setOverlay(videoPerspective);
     story.addPerspective(annotationPerspective);
 
+    var goalieClipboard = new ClipboardPerspective("http://localhost:3000/goalie.png");
+    goalieClipboard.setCanvas("goalCanvas");
+    story.addPerspective(goalieClipboard);
+
+    var rinkClipboard = new ClipboardPerspective("http://localhost:3000/rink2.png");
+    rinkClipboard.setCanvas("rinkCanvas");
+    story.addPerspective(rinkClipboard);
+
     var circle = new CircleAnnotation();
     circle.startTime = 1;
     circle.endTime = 15;
     circle.setPerspective(annotationPerspective);
     story.addEvent(circle);
+
+    var circle = new CircleAnnotation();
+    circle.startTime = 1;
+    circle.endTime = 15;
+    circle.setPerspective(goalieClipboard);
+    story.addEvent(circle);
+
+    var circle = new CircleAnnotation();
+    circle.startTime = 1;
+    circle.endTime = 15;
+    circle.setPerspective(rinkClipboard);
+    story.addEvent(circle);
+
+
+
 
     var circle2 = new RectAnnotation();
     circle2.startTime = 13;
@@ -73,21 +95,18 @@ Template["videoPane"].onRendered(function () {
     newColumns.scrollBarY = true;
     var col1Rows          = thePortal.createRows("column1Rows");
     newColumns.addSection(col1Rows);
-    col1Rows.addHeader("Controls");
     col1Rows.addPortlet("controls", 50);
     col1Rows.width = 100;
     col1Rows.height = 300;
     newColumns.addResizer();
 
     var newRows = thePortal.createRows("column2Rows");
-    newRows.addHeader("Events");
     newRows.addPortlet("events", 115);
     newRows.width = 800;
     newRows.height = 300;
     newColumns.addSection(newRows);
 
     var clockRow = thePortal.createRows("clockRow");
-    clockRow.addHeader("Clock");
     clockRow.addPortlet("ClockRow" , 115);
     newRows.addSection(clockRow);
 
